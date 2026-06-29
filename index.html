@@ -136,9 +136,17 @@
     .section-title {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
       color: var(--white);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .section-desc {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
       text-align: center;
       margin-bottom: 2.4rem;
     }
@@ -148,7 +156,7 @@
       letter-spacing: 0.22em;
       color: var(--muted);
       text-align: center;
-      margin-top: -1.8rem;
+      margin-top: -0.4rem;
       margin-bottom: 2.4rem;
     }
 
@@ -185,6 +193,14 @@
     label .req {
       color: var(--accent);
       margin-left: 2px;
+    }
+
+    #message-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     input, select, textarea {
@@ -436,7 +452,7 @@
     </a>
     <!-- Apple Music -->
     <a href="https://music.apple.com/tr/album/detay-detail/1198686389" target="_blank" rel="noopener" title="Apple Music">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.15 0H5.85A5.85 5.85 0 0 0 0 5.85v12.3A5.85 5.85 0 0 0 5.85 24h12.3A5.85 5.85 0 0 0 24 18.15V5.85A5.85 5.85 0 0 0 18.15 0zm-3.03 7.07l-5.56 1.6a.4.4 0 0 0-.29.39v5.18a2.1 2.1 0 0 1-.6 1.63 2.28 2.28 0 0 1-1.56.57 2.27 2.27 0 1 1 0-4.54c.36 0 .7.08 1.02.22V7.25a1.4 1.4 0 0 1 1.01-1.35l5.56-1.6a1.4 1.4 0 0 1 1.78 1.35v3.13a2.1 2.1 0 0 1-.6 1.63 2.28 2.28 0 0 1-1.56.57 2.27 2.27 0 1 1 0-4.54c.36 0 .7.08 1.01.22V7.2a.4.4 0 0 0-.21-.13z"/></svg>
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="fill:currentColor"><path fill-rule="evenodd" d="m10.995 0 .573.001q.241 0 .483.007c.35.01.705.03 1.051.093.352.063.68.166.999.329a3.36 3.36 0 0 1 1.47 1.468c.162.32.265.648.328 1 .063.347.084.7.093 1.051q.007.241.007.483l.001.573v5.99l-.001.573q0 .241-.008.483c-.01.35-.03.704-.092 1.05a3.5 3.5 0 0 1-.33 1 3.36 3.36 0 0 1-1.468 1.468 3.5 3.5 0 0 1-1 .33 7 7 0 0 1-1.05.092q-.241.007-.483.008l-.573.001h-5.99l-.573-.001q-.241 0-.483-.008a7 7 0 0 1-1.052-.092 3.6 3.6 0 0 1-.998-.33 3.36 3.36 0 0 1-1.47-1.468 3.6 3.6 0 0 1-.328-1 7 7 0 0 1-.093-1.05Q.002 11.81 0 11.568V5.005l.001-.573q0-.241.007-.483c.01-.35.03-.704.093-1.05a3.6 3.6 0 0 1 .329-1A3.36 3.36 0 0 1 1.9.431 3.5 3.5 0 0 1 2.896.1 7 7 0 0 1 3.95.008Q4.19.002 4.432 0h.573zm-.107 2.518-4.756.959H6.13a.66.66 0 0 0-.296.133.5.5 0 0 0-.16.31c-.004.027-.01.08-.01.16v5.516c0 .14-.012.275-.106.39-.095.115-.21.15-.347.177l-.31.063c-.268.054-.51.103-.719.175a1.9 1.9 0 0 0-.56.294 1.4 1.4 0 0 0-.4.508 1.7 1.7 0 0 0-.142.72c0 .27.052.504.152.7.1.194.236.354.4.477a1.76 1.76 0 0 0 1.028.32c.2 0 .388-.028.56-.082a1.6 1.6 0 0 0 .467-.24 1.5 1.5 0 0 0 .35-.4c.09-.158.14-.338.14-.533V5.3l4.287-.863v3.51c0 .14-.012.275-.106.39-.094.115-.21.15-.347.177l-.31.063c-.267.054-.51.103-.718.175a1.9 1.9 0 0 0-.56.294 1.4 1.4 0 0 0-.401.507 1.7 1.7 0 0 0-.142.72c0 .27.052.505.152.7.1.194.236.355.4.478a1.76 1.76 0 0 0 1.028.32c.2 0 .388-.029.56-.082a1.6 1.6 0 0 0 .467-.24 1.5 1.5 0 0 0 .35-.4c.09-.158.14-.338.14-.533V3.178a.66.66 0 0 0-.537-.648z"/></svg>
     </a>
     <!-- Patreon -->
     <a href="https://patreon.com/sezeryilmaz" target="_blank" rel="noopener" title="Patreon">
@@ -449,6 +465,7 @@
     <!-- BOOKING -->
     <section id="book">
       <p class="section-title">Booking</p>
+      <p class="section-desc">Please fill out the form so we can respond to you via email promptly.</p>
 
       <form
         name="booking"
@@ -526,7 +543,7 @@
         </div>
 
         <div class="form-group" style="margin-top:1rem;">
-          <label for="message">Message</label>
+          <label for="message" id="message-label">You may include details about your event such as the approximate duration, number of guests, and any other relevant information.</label>
           <textarea id="message" name="message"></textarea>
         </div>
 
