@@ -130,6 +130,26 @@
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-align: center;
+      margin-bottom: 2.4rem;
+    }
+
+    .bio-subtitle {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      text-align: center;
+      margin-top: -1.8rem;
+      margin-bottom: 2.4rem;
     }
 
     /* FORM */
@@ -390,11 +410,10 @@
 
   <header>
     <h1>Sezer Yılmaz</h1>
-    <p class="subtitle">Instrumentalist<span>·</span>Qanun Player</p>
     <nav>
-      <a href="#book">Book</a>
+      <a href="#book">Booking</a>
       <a href="#videos">Videos</a>
-      <a href="#bio">Bio</a>
+      <a href="#bio">Biography</a>
     </nav>
   </header>
 
@@ -417,7 +436,7 @@
     </a>
     <!-- Apple Music -->
     <a href="https://music.apple.com/tr/album/detay-detail/1198686389" target="_blank" rel="noopener" title="Apple Music">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.877-.726 10.496 10.496 0 0 0-1.564-.15c-.05-.003-.065-.007-.1-.01H5.967c-.05.003-.077.006-.112.01a10.496 10.496 0 0 0-1.564.15 5.022 5.022 0 0 0-1.877.726C1.308 1.624.563 2.624.246 3.934a9.23 9.23 0 0 0-.24 2.19C0 6.628 0 6.84 0 12s0 5.372.006 5.876a9.23 9.23 0 0 0 .24 2.19c.317 1.31 1.062 2.31 2.18 3.043a5.022 5.022 0 0 0 1.877.726 10.496 10.496 0 0 0 1.564.15c.05.003.065.007.1.01h12.066c.05-.003.077-.006.112-.01a10.496 10.496 0 0 0 1.564-.15 5.022 5.022 0 0 0 1.877-.726c1.118-.734 1.863-1.734 2.18-3.043a9.23 9.23 0 0 0 .24-2.19C24 17.372 24 17.16 24 12s0-5.372-.006-5.876zM9.95 15.9c0 .522-.15.99-.44 1.395-.404.563-.986.847-1.73.847-.496 0-.942-.128-1.327-.38a2.34 2.34 0 0 1-.86-1.016 3.14 3.14 0 0 1-.252-1.25c0-.518.15-.984.446-1.39.403-.563.984-.847 1.73-.847.495 0 .94.13 1.325.382.387.253.672.6.853 1.016.163.39.255.8.255 1.243zm6.533-5.46l-5.01 1.44V16.9c0 .52-.15.988-.44 1.393-.403.56-.985.845-1.73.845-.495 0-.94-.128-1.326-.38a2.34 2.34 0 0 1-.86-1.016 3.14 3.14 0 0 1-.252-1.25c0-.518.15-.984.447-1.39.402-.563.983-.847 1.73-.847.494 0 .94.13 1.324.382l.11.077V9.883c0-.404.275-.756.667-.854l5.01-1.44c.505-.145 1.02.218 1.02.74v1.35c0 .406-.275.757-.69.86z"/></svg>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.15 0H5.85A5.85 5.85 0 0 0 0 5.85v12.3A5.85 5.85 0 0 0 5.85 24h12.3A5.85 5.85 0 0 0 24 18.15V5.85A5.85 5.85 0 0 0 18.15 0zm-3.03 7.07l-5.56 1.6a.4.4 0 0 0-.29.39v5.18a2.1 2.1 0 0 1-.6 1.63 2.28 2.28 0 0 1-1.56.57 2.27 2.27 0 1 1 0-4.54c.36 0 .7.08 1.02.22V7.25a1.4 1.4 0 0 1 1.01-1.35l5.56-1.6a1.4 1.4 0 0 1 1.78 1.35v3.13a2.1 2.1 0 0 1-.6 1.63 2.28 2.28 0 0 1-1.56.57 2.27 2.27 0 1 1 0-4.54c.36 0 .7.08 1.01.22V7.2a.4.4 0 0 0-.21-.13z"/></svg>
     </a>
     <!-- Patreon -->
     <a href="https://patreon.com/sezeryilmaz" target="_blank" rel="noopener" title="Patreon">
@@ -429,8 +448,7 @@
 
     <!-- BOOKING -->
     <section id="book">
-      <p class="section-label">Booking</p>
-      <h2>Book Your Experience</h2>
+      <p class="section-title">Booking</p>
 
       <form
         name="booking"
@@ -512,7 +530,7 @@
           <textarea id="message" name="message"></textarea>
         </div>
 
-        <button type="submit">submit</button>
+        <button type="submit">Submit</button>
       </form>
 
       <div id="form-success">
@@ -526,7 +544,7 @@
 
     <!-- VIDEOS -->
     <section id="videos">
-      <p class="section-label">Videos</p>
+      <p class="section-title">Videos</p>
       <div class="video-grid">
         <div class="video-wrap">
           <iframe
@@ -549,7 +567,8 @@
 
     <!-- BIO -->
     <section id="bio">
-      <p class="section-label">Bio</p>
+      <p class="section-title">Biography</p>
+      <p class="bio-subtitle">instrumentalist · qanun player</p>
       <p>On the morning of Sunday, January 19, 1986, Sezer Yılmaz was born in a "state hospital," entirely oblivious to the meaning of words like "hospital" (and especially "state.") It would be years before he would fully grasp that this hospital was located in a country called Türkiye.</p>
       <p>He began his musical journey with the bağlama (another instrument probably of West Asia origin) at the age of ten. For a time, he explored instruments like percussion and the oud, but from 2000 onward, he devoted himself entirely to the qanun.</p>
       <p>In 2000, he was admitted to the Antalya Anatolian Fine Arts High School, where he studied for one year. In September 2001, he took the entrance exams for the Istanbul Technical University Turkish Music State Conservatory High School Unit (by that time, he had started to grasp what 'state' truly meant) and succeeded, marking the beginning of a significant chapter in his musical education. That same year, he had the privilege of meeting Göksel Baktagir, a master of the qanun and a composer whose contributions to Turkish music would leave an indelible mark on both the art form and Sezer's journey. During this period, he honed his craft under the guidance of Erol Deran for qanun performance and deepened his understanding of repertoire through lessons with the renowned songwriter Erol Sayan.</p>
