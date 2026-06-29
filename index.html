@@ -6,7 +6,7 @@
   <title>Sezer Yılmaz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -40,12 +40,12 @@
     }
 
     header h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
-      letter-spacing: 0.18em;
+      font-family: 'Great Vibes', cursive;
+      font-weight: 400;
+      font-size: clamp(3rem, 9vw, 5.5rem);
       color: var(--white);
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
     }
 
     nav {
@@ -66,26 +66,40 @@
 
     nav a:hover { color: var(--accent); }
 
-    /* SOCIAL */
+    /* SOCIAL ICONS */
     .social-bar {
       display: flex;
       justify-content: center;
-      gap: 1.4rem;
+      gap: 0.75rem;
       padding: 1.6rem 2rem;
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
     }
 
     .social-bar a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
       color: var(--muted);
       text-decoration: none;
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transition: color 0.2s;
+      transition: border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
     }
 
-    .social-bar a:hover { color: var(--accent); }
+    .social-bar a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .social-bar a svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
 
     /* MAIN */
     main {
@@ -180,7 +194,6 @@
       min-height: 110px;
     }
 
-    /* Date/time input color fix for webkit */
     input[type="date"], input[type="time"] {
       color-scheme: dark;
     }
@@ -230,7 +243,6 @@
       -webkit-appearance: auto;
     }
 
-    /* Date + time in one row */
     .datetime-row {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -257,14 +269,54 @@
       color: var(--bg);
     }
 
+    /* SUCCESS STATE */
     #form-success {
       display: none;
-      padding: 1.2rem;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-size: 0.85rem;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.4rem;
+      animation: pop 0.4s ease;
+    }
+
+    .success-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0.6); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.6rem;
+      color: var(--white);
       letter-spacing: 0.05em;
-      margin-top: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .success-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
     }
 
     /* VIDEOS */
@@ -290,10 +342,6 @@
       border: none;
     }
 
-    @media (max-width: 580px) {
-      .video-grid { grid-template-columns: 1fr; }
-    }
-
     /* BIO */
     #bio p {
       margin-bottom: 1.4rem;
@@ -316,11 +364,12 @@
     @media (max-width: 580px) {
       .form-row { grid-template-columns: 1fr; }
       .datetime-row { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
       nav { gap: 1.2rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
+      * { transition: none !important; animation: none !important; }
     }
   </style>
 </head>
@@ -336,12 +385,30 @@
   </header>
 
   <div class="social-bar">
-    <a href="https://youtube.com/@sezer.yilmaz" target="_blank" rel="noopener">YouTube</a>
-    <a href="https://instagram.com/_sezer_yilmaz" target="_blank" rel="noopener">Instagram</a>
-    <a href="https://tiktok.com/@yilmaz.sezer" target="_blank" rel="noopener">TikTok</a>
-    <a href="https://open.spotify.com/album/5gyYvOCGSOTP4z0UUhtL4D" target="_blank" rel="noopener">Spotify</a>
-    <a href="https://music.apple.com/tr/album/detay-detail/1198686389" target="_blank" rel="noopener">Apple Music</a>
-    <a href="https://patreon.com/sezeryilmaz" target="_blank" rel="noopener">Patreon</a>
+    <!-- YouTube -->
+    <a href="https://youtube.com/@sezer.yilmaz" target="_blank" rel="noopener" title="YouTube">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+    </a>
+    <!-- Instagram -->
+    <a href="https://instagram.com/_sezer_yilmaz" target="_blank" rel="noopener" title="Instagram">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.2c1.2-.1 1.6-.1 4.8-.1zm0-2.2C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+    </a>
+    <!-- TikTok -->
+    <a href="https://tiktok.com/@yilmaz.sezer" target="_blank" rel="noopener" title="TikTok">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.6 3A4.4 4.4 0 0 1 15.2 0h-3.1v16.4a2.6 2.6 0 0 1-2.6 2.2 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.3 0 .5 0 .8.1V10.3a6 6 0 0 0-.8-.1 5.7 5.7 0 0 0-5.7 5.7 5.7 5.7 0 0 0 5.7 5.7 5.7 5.7 0 0 0 5.7-5.7V8.1a7.5 7.5 0 0 0 4.4 1.4V6.4A4.4 4.4 0 0 1 19.6 3z"/></svg>
+    </a>
+    <!-- Spotify -->
+    <a href="https://open.spotify.com/album/5gyYvOCGSOTP4z0UUhtL4D" target="_blank" rel="noopener" title="Spotify">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.4-.7.5-1 .3-2.9-1.8-6.5-2.2-10.7-1.2-.4.1-.8-.2-.9-.6-.1-.4.2-.8.6-.9 4.6-1.1 8.6-.6 11.8 1.3.3.3.4.7.2 1.1zm1.5-3.3c-.3.5-.9.6-1.3.3-3.3-2-8.3-2.6-12.2-1.4-.5.1-1-.1-1.2-.6-.1-.5.1-1 .6-1.2 4.5-1.4 10-0.7 13.7 1.6.5.3.6.9.4 1.3zm.1-3.4C15.3 8 8.4 7.8 4.9 8.8c-.6.2-1.2-.2-1.3-.7-.2-.6.1-1.2.7-1.3 4-1.2 10.7-.9 14.9 1.5.5.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/></svg>
+    </a>
+    <!-- Apple Music -->
+    <a href="https://music.apple.com/tr/album/detay-detail/1198686389" target="_blank" rel="noopener" title="Apple Music">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.877-.726 10.496 10.496 0 0 0-1.564-.15c-.05-.003-.065-.007-.1-.01H5.967c-.05.003-.077.006-.112.01a10.496 10.496 0 0 0-1.564.15 5.022 5.022 0 0 0-1.877.726C1.308 1.624.563 2.624.246 3.934a9.23 9.23 0 0 0-.24 2.19C0 6.628 0 6.84 0 12s0 5.372.006 5.876a9.23 9.23 0 0 0 .24 2.19c.317 1.31 1.062 2.31 2.18 3.043a5.022 5.022 0 0 0 1.877.726 10.496 10.496 0 0 0 1.564.15c.05.003.065.007.1.01h12.066c.05-.003.077-.006.112-.01a10.496 10.496 0 0 0 1.564-.15 5.022 5.022 0 0 0 1.877-.726c1.118-.734 1.863-1.734 2.18-3.043a9.23 9.23 0 0 0 .24-2.19C24 17.372 24 17.16 24 12s0-5.372-.006-5.876zM9.95 15.9c0 .522-.15.99-.44 1.395-.404.563-.986.847-1.73.847-.496 0-.942-.128-1.327-.38a2.34 2.34 0 0 1-.86-1.016 3.14 3.14 0 0 1-.252-1.25c0-.518.15-.984.446-1.39.403-.563.984-.847 1.73-.847.495 0 .94.13 1.325.382.387.253.672.6.853 1.016.163.39.255.8.255 1.243zm6.533-5.46l-5.01 1.44V16.9c0 .52-.15.988-.44 1.393-.403.56-.985.845-1.73.845-.495 0-.94-.128-1.326-.38a2.34 2.34 0 0 1-.86-1.016 3.14 3.14 0 0 1-.252-1.25c0-.518.15-.984.447-1.39.402-.563.983-.847 1.73-.847.494 0 .94.13 1.324.382l.11.077V9.883c0-.404.275-.756.667-.854l5.01-1.44c.505-.145 1.02.218 1.02.74v1.35c0 .406-.275.757-.69.86z"/></svg>
+    </a>
+    <!-- Patreon -->
+    <a href="https://patreon.com/sezeryilmaz" target="_blank" rel="noopener" title="Patreon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.82 2.41C11.57 2.41 8.93 5.06 8.93 8.3c0 3.23 2.64 5.86 5.89 5.86 3.24 0 5.88-2.63 5.88-5.86 0-3.24-2.64-5.89-5.88-5.89M0 21.59h3.76V2.41H0v19.18z"/></svg>
+    </a>
   </div>
 
   <main>
@@ -432,8 +499,15 @@
         </div>
 
         <button type="submit">Send Request</button>
-        <div id="form-success">Your request has been received. I'll be in touch shortly.</div>
       </form>
+
+      <div id="form-success">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="success-title">Request Received</p>
+        <p class="success-text">Thank you — I'll be in touch with you shortly.</p>
+      </div>
     </section>
 
     <!-- VIDEOS -->
@@ -515,4 +589,3 @@
 
 </body>
 </html>
-
