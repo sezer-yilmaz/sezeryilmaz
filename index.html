@@ -267,6 +267,33 @@
       margin-top: 1rem;
     }
 
+    /* VIDEOS */
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 580px) {
+      .video-grid { grid-template-columns: 1fr; }
+    }
+
     /* BIO */
     #bio p {
       margin-bottom: 1.4rem;
@@ -303,6 +330,7 @@
     <h1>Sezer Yılmaz</h1>
     <nav>
       <a href="#book">Book</a>
+      <a href="#videos">Videos</a>
       <a href="#bio">Bio</a>
     </nav>
   </header>
@@ -406,6 +434,29 @@
         <button type="submit">Send Request</button>
         <div id="form-success">Your request has been received. I'll be in touch shortly.</div>
       </form>
+    </section>
+
+    <!-- VIDEOS -->
+    <section id="videos">
+      <p class="section-label">Videos</p>
+      <div class="video-grid">
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/djZF6vUbFgQ"
+            title="Sezer Yılmaz"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/Pi12-_tXoBI"
+            title="Sezer Yılmaz"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
     </section>
 
     <!-- BIO -->
