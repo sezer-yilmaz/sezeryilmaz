@@ -368,11 +368,28 @@
       letter-spacing: 0.04em;
     }
 
-    /* VIDEOS */
-    .video-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* VIDEOS — CAROUSEL */
+    .video-carousel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .video-track-wrap {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .video-track {
+      display: flex;
       gap: 1rem;
+      transition: transform 0.4s ease;
+    }
+
+    .video-slide {
+      flex: 0 0 calc(50% - 0.5rem);
+      min-width: 0;
     }
 
     .video-wrap {
@@ -389,6 +406,45 @@
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    .carousel-btn {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+    }
+
+    .carousel-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .carousel-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 580px) {
+      .video-slide { flex: 0 0 100%; }
     }
 
     /* BIO */
@@ -413,7 +469,6 @@
     @media (max-width: 580px) {
       .form-row { grid-template-columns: 1fr; }
       .datetime-row { grid-template-columns: 1fr; }
-      .video-grid { grid-template-columns: 1fr; }
       nav { gap: 1.2rem; }
     }
 
@@ -562,23 +617,49 @@
     <!-- VIDEOS -->
     <section id="videos">
       <p class="section-title">Videos</p>
-      <div class="video-grid">
-        <div class="video-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/djZF6vUbFgQ"
-            title="Sezer Yılmaz"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+      <div class="video-carousel">
+        <button class="carousel-btn" id="video-prev" aria-label="Previous videos" disabled>
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="video-track-wrap">
+          <div class="video-track" id="video-track">
+            <div class="video-slide">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/djZF6vUbFgQ" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="video-slide">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/Pi12-_tXoBI" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="video-slide">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/ITkHUTCadQs" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="video-slide">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/mSo9BYt3qnk" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="video-slide">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/1Zss7A30GBk" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="video-slide">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/bdFaKrbWkdw" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="video-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/Pi12-_tXoBI"
-            title="Sezer Yılmaz"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
+
+        <button class="carousel-btn" id="video-next" aria-label="Next videos">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
       </div>
     </section>
 
@@ -636,6 +717,36 @@
         alert('Something went wrong. Please try again.');
       }
     });
+
+    // Video carousel — 2 visible at a time, step by 2
+    const track = document.getElementById('video-track');
+    const slides = track.querySelectorAll('.video-slide');
+    const prevBtn = document.getElementById('video-prev');
+    const nextBtn = document.getElementById('video-next');
+    const perView = window.innerWidth <= 580 ? 1 : 2;
+    const totalSlides = slides.length;
+    let index = 0;
+
+    function updateCarousel() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      const gap = 16; // matches 1rem gap
+      track.style.transform = `translateX(-${index * (slideWidth + gap)}px)`;
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index >= totalSlides - perView;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      index = Math.max(0, index - perView);
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      index = Math.min(totalSlides - perView, index + perView);
+      updateCarousel();
+    });
+
+    window.addEventListener('resize', updateCarousel);
+    updateCarousel();
   </script>
 
 </body>
