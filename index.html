@@ -211,8 +211,49 @@
       min-height: 110px;
     }
 
-    input[type="date"], input[type="time"] {
+    input[type="date"] {
       color-scheme: dark;
+    }
+
+    /* MODERN AMPM TOGGLE DESIGN */
+    .ampm-container {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .ampm-container input[type="text"] {
+      flex: 1;
+    }
+
+    .ampm-toggle-group {
+      display: flex;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2px;
+    }
+
+    .ampm-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      padding: 0 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+    }
+
+    .ampm-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
     }
 
     /* Secondary setup options */
@@ -531,7 +572,16 @@
           </div>
           <div class="form-group">
             <label for="event-time">Start Time <span class="req">*</span></label>
-            <input type="time" id="event-time" name="event-time" required />
+            <div class="ampm-container">
+              <!-- Çakışmayı önlemek için bu alanın name niteliği kaldırıldı -->
+              <input type="text" id="event-time" placeholder="--:--" required pattern="^(0[1-9]|1[0-2]):[0-5][0-9]$" title="Please enter time in HH:MM format (e.g. 07:30)" />
+              <div class="ampm-toggle-group">
+                <button type="button" class="ampm-btn" id="btn-am">AM</button>
+                <button type="button" class="ampm-btn active" id="btn-pm">PM</button>
+              </div>
+            </div>
+            <!-- Netlify'a tek parça temiz veri gönderecek olan ana alan -->
+            <input type="hidden" name="event-time" id="hidden-event-time" />
           </div>
         </div>
 
@@ -655,12 +705,41 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Past dates prevention logic
     const dateInput = document.getElementById('event-date');
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
     dateInput.min = `${yyyy}-${mm}-${dd}`;
+
+    // Modern AM/PM Toggle Logic
+    const timeInput = document.getElementById('event-time');
+    const btnAm = document.getElementById('btn-am');
+    const btnPm = document.getElementById('btn-pm');
+    const hiddenTimeInput = document.getElementById('hidden-event-time');
+    let currentPeriod = 'PM';
+
+    // Mask typing format (Adds colon automatically: HH:MM)
+    timeInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/[^0-9]/g, '');
+      if (value.length > 2) {
+        value = value.slice(0, 2) + ':' + value.slice(2, 4);
+      }
+      e.target.value = value.slice(0, 5);
+    });
+
+    btnAm.addEventListener('click', () => {
+      btnAm.classList.add('active');
+      btnPm.classList.remove('active');
+      currentPeriod = 'AM';
+    });
+
+    btnPm.addEventListener('click', () => {
+      btnPm.classList.add('active');
+      btnAm.classList.remove('active');
+      currentPeriod = 'PM';
+    });
 
     const eventTypeSelect = document.getElementById('event-type');
     const secondaryOptions = document.getElementById('secondary-options');
@@ -681,7 +760,13 @@
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      
+      // Combine time input and AM/PM toggle value right before submission
+      hiddenTimeInput.value = `${timeInput.value} ${currentPeriod}`;
+
+      // FormData direct compilation (Clean form data state)
       const data = new FormData(form);
+
       try {
         await fetch('/', {
           method: 'POST',
@@ -695,6 +780,7 @@
       }
     });
 
+    // Carousel state
     const track = document.getElementById('video-track');
     const slides = track.querySelectorAll('.video-slide');
     const prevBtn = document.getElementById('video-prev');
@@ -704,12 +790,15 @@
 
     function updateCarousel() {
       const perView = window.innerWidth <= 580 ? 1 : 2;
+      
       if (index > totalSlides - perView) {
         index = Math.max(0, totalSlides - perView);
       }
+
       const slideWidth = slides[0].getBoundingClientRect().width;
-      const gap = 16;
+      const gap = 16; // 1rem gap
       track.style.transform = `translateX(-${index * (slideWidth + gap)}px)`;
+      
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index >= totalSlides - perView;
     }
