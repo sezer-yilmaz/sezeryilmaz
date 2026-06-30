@@ -6,7 +6,7 @@
   <title>Sezer Yılmaz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -27,8 +27,8 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: 16.5px;
+      line-height: 1.75;
       min-height: 100vh;
     }
 
@@ -93,8 +93,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--muted);
@@ -109,8 +109,8 @@
     }
 
     .social-bar a svg {
-      width: 17px;
-      height: 17px;
+      width: 20px;
+      height: 20px;
       fill: currentColor;
     }
 
@@ -134,17 +134,18 @@
     }
 
     .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
       color: var(--white);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       text-align: center;
       margin-bottom: 0.9rem;
     }
 
     .section-desc {
-      font-size: 0.78rem;
+      font-size: 0.88rem;
       letter-spacing: 0.04em;
       color: var(--muted);
       text-align: center;
@@ -152,7 +153,7 @@
     }
 
     .bio-subtitle {
-      font-size: 0.65rem;
+      font-size: 0.78rem;
       letter-spacing: 0.22em;
       color: var(--muted);
       text-align: center;
@@ -162,11 +163,12 @@
 
     /* FORM */
     #book h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
       color: var(--white);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       margin-bottom: 2.4rem;
     }
 
@@ -184,7 +186,8 @@
     }
 
     label {
-      font-size: 0.68rem;
+      font-size: 0.78rem;
+      font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--muted);
@@ -196,11 +199,11 @@
     }
 
     #message-label {
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       letter-spacing: 0.03em;
       text-transform: none;
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     input, select, textarea {
@@ -209,18 +212,15 @@
       color: var(--white);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       padding: 0.75rem 1rem;
       outline: none;
       transition: border-color 0.2s;
       width: 100%;
       appearance: none;
       -webkit-appearance: none;
+      -moz-appearance: none;
       border-radius: 0;
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: transparent;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -256,7 +256,7 @@
     #secondary-options.visible { display: block; }
 
     .sublabel {
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
@@ -275,7 +275,7 @@
       align-items: center;
       gap: 0.75rem;
       cursor: pointer;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       color: var(--text);
       text-transform: none;
       letter-spacing: 0;
@@ -290,6 +290,7 @@
       cursor: pointer;
       appearance: auto;
       -webkit-appearance: auto;
+      -moz-appearance: auto;
     }
 
     .datetime-row {
@@ -354,11 +355,12 @@
     }
 
     .success-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 1.6rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 1.3rem;
       color: var(--white);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       margin-bottom: 0.6rem;
     }
 
@@ -449,8 +451,8 @@
 
     /* BIO */
     #bio p:not(.section-title):not(.bio-subtitle) {
-      margin-bottom: 1.4rem;
-      font-size: 0.95rem;
+      margin-bottom: 0.95rem; /* Paragraflar arasındaki dikey boşluk sıkılaştırıldı (Eski: 1.5rem) */
+      font-size: 1.05rem;
     }
 
     #bio p:last-child { margin-bottom: 0; }
@@ -520,7 +522,7 @@
     <!-- BOOKING -->
     <section id="book">
       <p class="section-title">Booking</p>
-      <p class="section-desc">Please fill out the form so we can respond to you via email promptly.</p>
+      <p class="section-desc">Please complete this short form to book your experience.</p>
 
       <form
         name="booking"
@@ -592,7 +594,7 @@
             </label>
             <label class="checkbox-label">
               <input type="checkbox" name="setup" value="Qanun & DJ Set" />
-              Qanun &amp; DJ Set
+              Qanun & DJ Set
             </label>
           </div>
         </div>
@@ -626,32 +628,32 @@
           <div class="video-track" id="video-track">
             <div class="video-slide">
               <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/djZF6vUbFgQ" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/djZF6vUbFgQ" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
             <div class="video-slide">
               <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/Pi12-_tXoBI" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/Pi12-_tXoBI" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
             <div class="video-slide">
               <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/ITkHUTCadQs" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ITkHUTCadQs" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
             <div class="video-slide">
               <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/mSo9BYt3qnk" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/mSo9BYt3qnk" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
             <div class="video-slide">
               <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/1Zss7A30GBk" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/1Zss7A30GBk" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
             <div class="video-slide">
               <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/bdFaKrbWkdw" title="Sezer Yılmaz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/bdFaKrbWkdw" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
           </div>
@@ -679,7 +681,7 @@
   </main>
 
   <footer>
-    &copy; <span id="year"></span> Sezer Yılmaz
+    © <span id="year"></span> Sezer Yılmaz
   </footer>
 
   <script>
@@ -718,29 +720,37 @@
       }
     });
 
-    // Video carousel — 2 visible at a time, step by 2
+    // Carousel state
     const track = document.getElementById('video-track');
     const slides = track.querySelectorAll('.video-slide');
     const prevBtn = document.getElementById('video-prev');
     const nextBtn = document.getElementById('video-next');
-    const perView = window.innerWidth <= 580 ? 1 : 2;
     const totalSlides = slides.length;
     let index = 0;
 
     function updateCarousel() {
+      const perView = window.innerWidth <= 580 ? 1 : 2;
+      
+      if (index > totalSlides - perView) {
+        index = Math.max(0, totalSlides - perView);
+      }
+
       const slideWidth = slides[0].getBoundingClientRect().width;
-      const gap = 16; // matches 1rem gap
+      const gap = 16; // 1rem gap
       track.style.transform = `translateX(-${index * (slideWidth + gap)}px)`;
+      
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index >= totalSlides - perView;
     }
 
     prevBtn.addEventListener('click', () => {
+      const perView = window.innerWidth <= 580 ? 1 : 2;
       index = Math.max(0, index - perView);
       updateCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
+      const perView = window.innerWidth <= 580 ? 1 : 2;
       index = Math.min(totalSlides - perView, index + perView);
       updateCarousel();
     });
