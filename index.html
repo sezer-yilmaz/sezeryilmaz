@@ -48,19 +48,6 @@
       line-height: 1.1;
     }
 
-    header .subtitle {
-      margin-top: 0.75rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    header .subtitle span {
-      margin: 0 0.5em;
-      color: var(--border);
-    }
-
     nav {
       margin-top: 1.5rem;
       display: flex;
@@ -124,15 +111,6 @@
     section { padding: 4rem 0; }
     section + section { border-top: 1px solid var(--border); }
 
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
     .section-title {
       font-family: 'Inter', sans-serif;
       font-weight: 400;
@@ -162,16 +140,6 @@
     }
 
     /* FORM */
-    #book h2 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-      color: var(--white);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 2.4rem;
-    }
-
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -451,7 +419,7 @@
 
     /* BIO */
     #bio p:not(.section-title):not(.bio-subtitle) {
-      margin-bottom: 0.95rem; /* Paragraflar arasındaki dikey boşluk sıkılaştırıldı (Eski: 1.5rem) */
+      margin-bottom: 0.95rem;
       font-size: 1.05rem;
     }
 
@@ -687,6 +655,13 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    const dateInput = document.getElementById('event-date');
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
+
     const eventTypeSelect = document.getElementById('event-type');
     const secondaryOptions = document.getElementById('secondary-options');
     const checkboxes = secondaryOptions.querySelectorAll('input[type="checkbox"]');
@@ -720,7 +695,6 @@
       }
     });
 
-    // Carousel state
     const track = document.getElementById('video-track');
     const slides = track.querySelectorAll('.video-slide');
     const prevBtn = document.getElementById('video-prev');
@@ -730,15 +704,12 @@
 
     function updateCarousel() {
       const perView = window.innerWidth <= 580 ? 1 : 2;
-      
       if (index > totalSlides - perView) {
         index = Math.max(0, totalSlides - perView);
       }
-
       const slideWidth = slides[0].getBoundingClientRect().width;
-      const gap = 16; // 1rem gap
+      const gap = 16;
       track.style.transform = `translateX(-${index * (slideWidth + gap)}px)`;
-      
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index >= totalSlides - perView;
     }
