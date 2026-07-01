@@ -39,6 +39,29 @@
       border-bottom: 1px solid var(--border);
     }
 
+    /* LANGUAGE SWITCHER */
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .lang-btn:hover { color: var(--accent); }
+    .lang-btn.active { color: var(--white); font-weight: 500; }
+
     header h1 {
       font-family: 'Great Vibes', cursive;
       font-weight: 400;
@@ -78,10 +101,14 @@
 
     .social-bar a {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
+      width: auto;
+      min-width: 66px;
+      height: 58px;
+      padding: 0 0.5rem;
+      gap: 0.35rem;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--muted);
@@ -96,9 +123,16 @@
     }
 
     .social-bar a svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
+    }
+
+    .social-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     /* MAIN */
@@ -215,15 +249,25 @@
       color-scheme: dark;
     }
 
-    /* MODERN AMPM TOGGLE DESIGN */
-    .ampm-container {
+    /* AM/PM & TIME SELECTORS */
+    .ampm-container, .tr-time-container {
       display: flex;
       gap: 0.5rem;
       width: 100%;
     }
 
-    .ampm-container input[type="text"] {
+    .time-selector {
+      display: flex;
+      gap: 0.5rem;
       flex: 1;
+    }
+
+    .time-selector select, .tr-time-container select {
+      flex: 1;
+      font-size: 0.8rem;
+      padding: 0.75rem 0.3rem;
+      padding-right: 1.4rem;
+      background-position: right 0.3rem center;
     }
 
     .ampm-toggle-group {
@@ -241,7 +285,7 @@
       font-size: 0.8rem;
       font-weight: 400;
       letter-spacing: 0.05em;
-      padding: 0 0.9rem;
+      padding: 0 0.8rem;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
       height: 100%;
@@ -466,6 +510,18 @@
 
     #bio p:last-child { margin-bottom: 0; }
 
+    #bio a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent);
+      transition: color 0.2s, border-bottom-color 0.2s;
+    }
+
+    #bio a:hover {
+      color: var(--white);
+      border-bottom-color: var(--white);
+    }
+
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
@@ -482,47 +538,60 @@
       .datetime-row { grid-template-columns: 1fr; }
       nav { gap: 1.2rem; }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; animation: none !important; }
-    }
   </style>
 </head>
 <body>
 
   <header>
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="lang-en" onclick="setLanguage('en')">ENGLISH</button>
+      <span style="color:var(--border); font-size:0.85rem;">|</span>
+      <button class="lang-btn" id="lang-tr" onclick="setLanguage('tr')">TÜRKÇE</button>
+    </div>
     <h1>Sezer Yılmaz</h1>
     <nav>
-      <a href="#book">Booking</a>
-      <a href="#videos">Videos</a>
-      <a href="#bio">Biography</a>
+      <a href="#book" id="nav-booking">Booking</a>
+      <a href="#videos" id="nav-videos">Videos</a>
+      <a href="#bio" id="nav-bio">Biography</a>
     </nav>
   </header>
 
   <div class="social-bar">
-    <!-- YouTube -->
     <a href="https://youtube.com/@sezer.yilmaz" target="_blank" rel="noopener" title="YouTube">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+      <span class="social-label">YouTube</span>
     </a>
-    <!-- Instagram -->
     <a href="https://instagram.com/_sezer_yilmaz" target="_blank" rel="noopener" title="Instagram">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.2c1.2-.1 1.6-.1 4.8-.1zm0-2.2C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.2c1.2-.1 1.6-.1 4.8-.1zm0-2.2C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+      <span class="social-label">Instagram</span>
     </a>
-    <!-- TikTok -->
     <a href="https://tiktok.com/@yilmaz.sezer" target="_blank" rel="noopener" title="TikTok">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.6 3A4.4 4.4 0 0 1 15.2 0h-3.1v16.4a2.6 2.6 0 0 1-2.6 2.2 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.3 0 .5 0 .8.1V10.3a6 6 0 0 0-.8-.1 5.7 5.7 0 0 0-5.7 5.7 5.7 5.7 0 0 0 5.7 5.7 5.7 5.7 0 0 0 5.7-5.7V8.1a7.5 7.5 0 0 0 4.4 1.4V6.4A4.4 4.4 0 0 1 19.6 3z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M19.6 3A4.4 4.4 0 0 1 15.2 0h-3.1v16.4a2.6 2.6 0 0 1-2.6 2.2 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.3 0 .5 0 .8.1V10.3a6 6 0 0 0-.8-.1 5.7 5.7 0 0 0-5.7 5.7 5.7 5.7 0 0 0 5.7 5.7 5.7 5.7 0 0 0 5.7-5.7V8.1a7.5 7.5 0 0 0 4.4 1.4V6.4A4.4 4.4 0 0 1 19.6 3z"/></svg>
+      <span class="social-label">TikTok</span>
     </a>
-    <!-- Spotify -->
+    <a href="https://x.com/sezeryilmaz" target="_blank" rel="noopener" title="X">
+      <svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      <span class="social-label">X</span>
+    </a>
+    <a href="https://linkedin.com/in/sezeryilmaz" target="_blank" rel="noopener" title="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <span class="social-label">LinkedIn</span>
+    </a>
     <a href="https://open.spotify.com/album/5gyYvOCGSOTP4z0UUhtL4D" target="_blank" rel="noopener" title="Spotify">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.4-.7.5-1 .3-2.9-1.8-6.5-2.2-10.7-1.2-.4.1-.8-.2-.9-.6-.1-.4.2-.8.6-.9 4.6-1.1 8.6-.6 11.8 1.3.3.3.4.7.2 1.1zm1.5-3.3c-.3.5-.9.6-1.3.3-3.3-2-8.3-2.6-12.2-1.4-.5.1-1-.1-1.2-.6-.1-.5.1-1 .6-1.2 4.5-1.4 10-0.7 13.7 1.6.5.3.6.9.4 1.3zm.1-3.4C15.3 8 8.4 7.8 4.9 8.8c-.6.2-1.2-.2-1.3-.7-.2-.6.1-1.2.7-1.3 4-1.2 10.7-.9 14.9 1.5.5.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.4-.7.5-1 .3-2.9-1.8-6.5-2.2-10.7-1.2-.4.1-.8-.2-.9-.6-.1-.4.2-.8.6-.9 4.6-1.1 8.6-.6 11.8 1.3.3.3.4.7.2 1.1zm1.5-3.3c-.3.5-.9.6-1.3.3-3.3-2-8.3-2.6-12.2-1.4-.5.1-1-.1-1.2-.6-.1-.5.1-1 .6-1.2 4.5-1.4 10-0.7 13.7 1.6.5.3.6.9.4 1.3zm.1-3.4C15.3 8 8.4 7.8 4.9 8.8c-.6.2-1.2-.2-1.3-.7-.2-.6.1-1.2.7-1.3 4-1.2 10.7-.9 14.9 1.5.5.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/></svg>
+      <span class="social-label">Spotify</span>
     </a>
-    <!-- Apple Music -->
     <a href="https://music.apple.com/tr/album/detay-detail/1198686389" target="_blank" rel="noopener" title="Apple Music">
-      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="fill:currentColor"><path fill-rule="evenodd" d="m10.995 0 .573.001q.241 0 .483.007c.35.01.705.03 1.051.093.352.063.68.166.999.329a3.36 3.36 0 0 1 1.47 1.468c.162.32.265.648.328 1 .063.347.084.7.093 1.051q.007.241.007.483l.001.573v5.99l-.001.573q0 .241-.008.483c-.01.35-.03.704-.092 1.05a3.5 3.5 0 0 1-.33 1 3.36 3.36 0 0 1-1.468 1.468 3.5 3.5 0 0 1-1 .33 7 7 0 0 1-1.05.092q-.241.007-.483.008l-.573.001h-5.99l-.573-.001q-.241 0-.483-.008a7 7 0 0 1-1.052-.092 3.6 3.6 0 0 1-.998-.33 3.36 3.36 0 0 1-1.47-1.468 3.6 3.6 0 0 1-.328-1 7 7 0 0 1-.093-1.05Q.002 11.81 0 11.568V5.005l.001-.573q0-.241.007-.483c.01-.35.03-.704.093-1.05a3.6 3.6 0 0 1 .329-1A3.36 3.36 0 0 1 1.9.431 3.5 3.5 0 0 1 2.896.1 7 7 0 0 1 3.95.008Q4.19.002 4.432 0h.573zm-.107 2.518-4.756.959H6.13a.66.66 0 0 0-.296.133.5.5 0 0 0-.16.31c-.004.027-.01.08-.01.16v5.516c0 .14-.012.275-.106.39-.095.115-.21.15-.347.177l-.31.063c-.268.054-.51.103-.719.175a1.9 1.9 0 0 0-.56.294 1.4 1.4 0 0 0-.4.508 1.7 1.7 0 0 0-.142.72c0 .27.052.504.152.7.1.194.236.354.4.477a1.76 1.76 0 0 0 1.028.32c.2 0 .388-.028.56-.082a1.6 1.6 0 0 0 .467-.24 1.5 1.5 0 0 0 .35-.4c.09-.158.14-.338.14-.533V5.3l4.287-.863v3.51c0 .14-.012.275-.106.39-.094.115-.21.15-.347.177l-.31.063c-.267.054-.51.103-.718.175a1.9 1.9 0 0 0-.56.294 1.4 1.4 0 0 0-.401.507 1.7 1.7 0 0 0-.142.72c0 .27.052.505.152.7.1.194.236.355.4.478a1.76 1.76 0 0 0 1.028.32c.2 0 .388-.029.56-.082a1.6 1.6 0 0 0 .467-.24 1.5 1.5 0 0 0 .35-.4c.09-.158.14-.338.14-.533V3.178a.66.66 0 0 0-.537-.648z"/></svg>
+      <svg viewBox="0 0 16 16" style="fill:currentColor"><path fill-rule="evenodd" d="m10.995 0 .573.001q.241 0 .483.007c.35.01.705.03 1.051.093.352.063.68.166.999.329a3.36 3.36 0 0 1 1.47 1.468c.162.32.265.648.328 1 .063.347.084.7.093 1.051q.007.241.007.483l.001.573v5.99l-.001.573q0 .241-.008.483c-.01.35-.03.704-.092 1.05a3.5 3.5 0 0 1-.33 1 3.36 3.36 0 0 1-1.468 1.468 3.5 3.5 0 0 1-1 .33 7 7 0 0 1-1.05.092q-.241.007-.483.008l-.573.001h-5.99l-.573-.001q-.241 0-.483-.008a7 7 0 0 1-1.052-.092 3.6 3.6 0 0 1-.998-.33 3.36 3.36 0 0 1-1.47-1.468 3.6 3.6 0 0 1-.328-1 7 7 0 0 1-.093-1.05Q.002 11.81 0 11.568V5.005l.001-.573q0-.241.007-.483c.01-.35.03-.704.093-1.05a3.6 3.6 0 0 1 .329-1A3.36 3.36 0 0 1 1.9.431 3.5 3.5 0 0 1 2.896.1 7 7 0 0 1 3.95.008Q4.19.002 4.432 0h.573zm-.107 2.518-4.756.959H6.13a.66.66 0 0 0-.296.133.5.5 0 0 0-.16.31c-.004.027-.01.08-.01.16v5.516c0 .14-.012.275-.106.39-.095.115-.21.15-.347.177l-.31.063c-.268.054-.51.103-.719.175a1.9 1.9 0 0 0-.56.294 1.4 1.4 0 0 0-.4.508 1.7 1.7 0 0 0-.142.72c0 .27.052.504.152.7.1.194.236.354.4.477a1.76 1.76 0 0 0 1.028.32c.2 0 .388-.028.56-.082a1.6 1.6 0 0 0 .467-.24 1.5 1.5 0 0 0 .35-.4c.09-.158.14-.338.14-.533V5.3l4.287-.863v3.51c0 .14-.012.275-.106.39-.094.115-.21.15-.347.177l-.31.063c-.267.054-.51.103-.718.175a1.9 1.9 0 0 0-.56.294 1.4 1.4 0 0 0-.401.507 1.7 1.7 0 0 0-.142.72c0 .27.052.505.152.7.1.194.236.355.4.478a1.76 1.76 0 0 0 1.028.32c.2 0 .388-.029.56-.082a1.6 1.6 0 0 0 .467-.24 1.5 1.5 0 0 0 .35-.4c.09-.158.14-.338.14-.533V3.178a.66.66 0 0 0-.537-.648z"/></svg>
+      <span class="social-label">Apple Music</span>
     </a>
-    <!-- Patreon -->
     <a href="https://patreon.com/sezeryilmaz" target="_blank" rel="noopener" title="Patreon">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.82 2.41C11.57 2.41 8.93 5.06 8.93 8.3c0 3.23 2.64 5.86 5.89 5.86 3.24 0 5.88-2.63 5.88-5.86 0-3.24-2.64-5.89-5.88-5.89M0 21.59h3.76V2.41H0v19.18z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M14.82 2.41C11.57 2.41 8.93 5.06 8.93 8.3c0 3.23 2.64 5.86 5.89 5.86 3.24 0 5.88-2.63 5.88-5.86 0-3.24-2.64-5.89-5.88-5.89M0 21.59h3.76V2.41H0v19.18z"/></svg>
+      <span class="social-label">Patreon</span>
+    </a>
+    <a href="https://kreosus.com/sezeryilmaz" target="_blank" rel="noopener" title="Kreosus">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      <span class="social-label">Kreosus</span>
     </a>
   </div>
 
@@ -530,89 +599,100 @@
 
     <!-- BOOKING -->
     <section id="book">
-      <p class="section-title">Booking</p>
-      <p class="section-desc">Please complete this short form to book your experience.</p>
+      <p class="section-title" id="title-booking">Booking</p>
+      <p class="section-desc" id="desc-booking">Please complete this short form to book your experience.</p>
 
-      <form
-        name="booking"
-        method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        id="booking-form"
-      >
+      <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="booking-form">
         <input type="hidden" name="form-name" value="booking" />
         <p style="display:none"><input name="bot-field" /></p>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="first-name">First Name <span class="req">*</span></label>
+            <label for="first-name"><span id="lbl-first-name">First Name</span> <span class="req">*</span></label>
             <input type="text" id="first-name" name="first-name" required />
           </div>
           <div class="form-group">
-            <label for="last-name">Last Name</label>
+            <label for="last-name" id="lbl-last-name">Last Name</label>
             <input type="text" id="last-name" name="last-name" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="email">Email <span class="req">*</span></label>
+            <label for="email"><span id="lbl-email">Email</span> <span class="req">*</span></label>
             <input type="email" id="email" name="email" required />
           </div>
           <div class="form-group">
-            <label for="phone">Phone</label>
+            <label for="phone" id="lbl-phone">Phone</label>
             <input type="tel" id="phone" name="phone" />
           </div>
         </div>
 
         <div class="datetime-row">
           <div class="form-group">
-            <label for="event-date">Event Date <span class="req">*</span></label>
-            <input type="date" id="event-date" name="event-date" required />
+            <label><span id="lbl-event-date">Event Date</span> <span class="req">*</span></label>
+            <div id="date-en-wrapper">
+              <input type="date" id="event-date-en" name="event-date-en" required />
+            </div>
+            <div id="date-tr-wrapper" style="display:none;">
+              <input type="text" id="event-date-tr" name="event-date-tr" placeholder="GG/AA/YYYY" maxlength="10" />
+            </div>
           </div>
           <div class="form-group">
-            <label for="event-time">Start Time <span class="req">*</span></label>
-            <div class="ampm-container">
-              <!-- Çakışmayı önlemek için bu alanın name niteliği kaldırıldı -->
-              <input type="text" id="event-time" placeholder="--:--" required pattern="^(0[1-9]|1[0-2]):[0-5][0-9]$" title="Please enter time in HH:MM format (e.g. 07:30)" />
+            <label><span id="lbl-start-time">Start Time</span> <span class="req">*</span></label>
+
+            <!-- EN: hour + minute dropdowns + AM/PM toggle -->
+            <div id="time-en-wrapper" class="ampm-container">
+              <div class="time-selector">
+                <select id="en-hour" name="en-hour" required><option value="" disabled selected>Hr</option></select>
+                <select id="en-minute" name="en-minute" required><option value="" disabled selected>Min</option></select>
+              </div>
               <div class="ampm-toggle-group">
                 <button type="button" class="ampm-btn" id="btn-am">AM</button>
                 <button type="button" class="ampm-btn active" id="btn-pm">PM</button>
               </div>
             </div>
-            <!-- Netlify'a tek parça temiz veri gönderecek olan ana alan -->
+
+            <!-- TR: hour + minute dropdowns -->
+            <div id="time-tr-wrapper" class="tr-time-container">
+              <select id="tr-hour" name="tr-hour">
+                <option value="" disabled selected>Saat</option>
+              </select>
+              <select id="tr-minute" name="tr-minute">
+                <option value="" disabled selected>Dakika</option>
+              </select>
+            </div>
+
+            <input type="hidden" name="event-date" id="hidden-event-date" />
             <input type="hidden" name="event-time" id="hidden-event-time" />
           </div>
         </div>
 
         <div class="form-group">
-          <label for="event-address">Event Address <span class="req">*</span></label>
+          <label for="event-address"><span id="lbl-event-address">Event Address</span> <span class="req">*</span></label>
           <input type="text" id="event-address" name="event-address" required />
         </div>
 
         <div class="form-group">
-          <label for="event-type">Event Type <span class="req">*</span></label>
-          <select id="event-type" name="event-type" required>
-            <option value="" disabled selected></option>
-            <option value="Musical Meditation Session">Musical Meditation Session</option>
-            <option value="Concert/Recital">Concert / Recital</option>
-            <option value="Engagement Ceremony">Engagement Ceremony</option>
-            <option value="Wedding">Wedding</option>
-            <option value="Brunch, Lunch or Dinner">Brunch, Lunch or Dinner</option>
-            <option value="Corporate Event/Conference/Opening">Corporate Event / Conference / Opening</option>
-          </select>
+          <label for="event-type"><span id="lbl-event-type">Event Type</span> <span class="req">*</span></label>
+          <select id="event-type" name="event-type" required></select>
+        </div>
+
+        <!-- Custom 'Other' Event Input -->
+        <div class="form-group" id="other-event-wrapper" style="display:none;">
+          <input type="text" id="other-event-type" name="other-event-type" placeholder="Please specify..." />
         </div>
 
         <div id="secondary-options">
-          <span class="sublabel">Preferred Setup</span>
+          <span class="sublabel" id="lbl-preferred-setup">Preferred Setup</span>
           <div class="checkbox-group">
             <label class="checkbox-label">
-              <input type="checkbox" name="setup" value="Solo Qanun" />
-              Solo Qanun
+              <input type="checkbox" name="setup" value="Solo Qanun" id="chk-solo" />
+              <span id="chk-solo-label">Solo Qanun</span>
             </label>
             <label class="checkbox-label">
-              <input type="checkbox" name="setup" value="Qanun & DJ Set" />
-              Qanun & DJ Set
+              <input type="checkbox" name="setup" value="Qanun & DJ Set" id="chk-dj" />
+              <span id="chk-dj-label">Qanun & DJ Set</span>
             </label>
           </div>
         </div>
@@ -622,62 +702,36 @@
           <textarea id="message" name="message"></textarea>
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" id="btn-submit">Submit</button>
       </form>
 
       <div id="form-success">
         <div class="success-icon">
           <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <p class="success-title">Thank You</p>
-        <p class="success-text">Your submission has been received.</p>
+        <p class="success-title" id="txt-success-title">Thank You</p>
+        <p class="success-text" id="txt-success-desc">Your submission has been received.</p>
       </div>
     </section>
 
     <!-- VIDEOS -->
     <section id="videos">
-      <p class="section-title">Videos</p>
+      <p class="section-title" id="title-videos">Videos</p>
       <div class="video-carousel">
-        <button class="carousel-btn" id="video-prev" aria-label="Previous videos" disabled>
+        <button class="carousel-btn" id="video-prev" aria-label="Previous" disabled>
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-
         <div class="video-track-wrap">
           <div class="video-track" id="video-track">
-            <div class="video-slide">
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/djZF6vUbFgQ" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="video-slide">
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/Pi12-_tXoBI" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="video-slide">
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/ITkHUTCadQs" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="video-slide">
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/mSo9BYt3qnk" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="video-slide">
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/1Zss7A30GBk" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="video-slide">
-              <div class="video-wrap">
-                <iframe src="https://www.youtube.com/embed/bdFaKrbWkdw" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
+            <div class="video-slide"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/djZF6vUbFgQ" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+            <div class="video-slide"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/Pi12-_tXoBI" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+            <div class="video-slide"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/ITkHUTCadQs" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+            <div class="video-slide"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/mSo9BYt3qnk" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+            <div class="video-slide"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/1Zss7A30GBk" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+            <div class="video-slide"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/bdFaKrbWkdw" title="Sezer Yılmaz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
           </div>
         </div>
-
-        <button class="carousel-btn" id="video-next" aria-label="Next videos">
+        <button class="carousel-btn" id="video-next" aria-label="Next">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
@@ -685,93 +739,302 @@
 
     <!-- BIO -->
     <section id="bio">
-      <p class="section-title">Biography</p>
-      <p class="bio-subtitle">instrumentalist · qanun player</p>
-      <p>On the morning of Sunday, January 19, 1986, Sezer Yılmaz was born in a "state hospital," entirely oblivious to the meaning of words like "hospital" (and especially "state.") It would be years before he would fully grasp that this hospital was located in a country called Türkiye.</p>
-      <p>He began his musical journey with the bağlama (another instrument probably of West Asia origin) at the age of ten. For a time, he explored instruments like percussion and the oud, but from 2000 onward, he devoted himself entirely to the qanun.</p>
-      <p>In 2000, he was admitted to the Antalya Anatolian Fine Arts High School, where he studied for one year. In September 2001, he took the entrance exams for the Istanbul Technical University Turkish Music State Conservatory High School Unit (by that time, he had started to grasp what 'state' truly meant) and succeeded, marking the beginning of a significant chapter in his musical education. That same year, he had the privilege of meeting Göksel Baktagir, a master of the qanun and a composer whose contributions to Turkish music would leave an indelible mark on both the art form and Sezer's journey. During this period, he honed his craft under the guidance of Erol Deran for qanun performance and deepened his understanding of repertoire through lessons with the renowned songwriter Erol Sayan.</p>
-      <p>At just sixteen, he performed his first concert alongside his violinist friend, Haluk Yılmaz. Shortly after, he had the honour of appearing as a guest artist at several of his teacher Göksel Baktagir's concerts, collaborating on memorable pieces with the master himself. He performed the qanun in numerous cities across Türkiye, as well as in Portugal, Denmark, Japan, Canada, Spain, the Netherlands, Italy, Switzerland, France, Germany, Jordan, the United Arab Emirates, and Australia as part of Arkın Ilıcalı's 'Mercan Dede' project.</p>
-      <p>In 2017, he released an album titled 'Detail', featuring Orçun Çanaklı's arrangements. The album brought together an exceptional line-up of musicians, including Volkan Öktem (drums), Alp Ersönmez (bass), Serhan Yasdıman (guitar), Yurdal Tokcan (oud), Şakir Ozan Uygan (percussion), and Haktan, whose unique vocals added to the mix.</p>
-      <p>He imagines concluding his time by making edits to this text, occasionally wondering, "Did I go on for too long?", assuming he doesn't face a significant health crisis in the future. As of the date this text was "completed", he has no grave, and with the timing of his final heartbeat still shrouded in uncertainty, his necrology remains unwritten, awaiting the inevitable.</p>
-      <p>He loves philosophy, literature, science and delectable food.</p>
+      <p class="section-title" id="title-bio">Biography</p>
+      <p class="bio-subtitle" id="subtitle-bio">instrumentalist · qanun player</p>
+      <div id="bio-content"></div>
     </section>
 
   </main>
 
-  <footer>
-    © <span id="year"></span> Sezer Yılmaz
-  </footer>
+  <footer>© <span id="year"></span> Sezer Yılmaz</footer>
 
   <script>
+    // ── TRANSLATIONS ──────────────────────────────────────────────
+    const translations = {
+      en: {
+        navBooking: "Booking", navVideos: "Videos", navBio: "Biography",
+        titleBooking: "Booking",
+        descBooking: "Please complete this short form to book your experience.",
+        lblFirstName: "First Name", lblLastName: "Last Name",
+        lblEmail: "Email", lblPhone: "Phone",
+        lblEventDate: "Event Date", lblStartTime: "Start Time",
+        lblEventAddress: "Event Address", lblEventType: "Event Type",
+        lblPreferredSetup: "Preferred Setup",
+        lblMessage: "You may include details about your event such as the approximate duration, number of guests, and any other relevant information.",
+        lblOtherPlaceholder: "Please specify...",
+        btnSubmit: "Submit",
+        successTitle: "Thank You", successDesc: "Your submission has been received.",
+        titleVideos: "Videos", titleBio: "Biography",
+        subtitleBio: "instrumentalist · qanun player",
+        chkSolo: "Solo Qanun", chkDj: "Qanun & DJ Set",
+        eventOptions: [
+          { val: "", text: "", disabled: true },
+          { val: "Musical Meditation Session", text: "Musical Meditation Session" },
+          { val: "Concert/Recital", text: "Concert / Recital" },
+          { val: "Engagement Ceremony", text: "Engagement Ceremony" },
+          { val: "Wedding", text: "Wedding" },
+          { val: "Brunch, Lunch or Dinner", text: "Brunch, Lunch or Dinner" },
+          { val: "Corporate Event/Conference/Opening", text: "Corporate Event / Conference / Opening" },
+          { val: "Other", text: "Other" }
+        ],
+        bio: [
+          `On the morning of Sunday, January 19, 1986, Sezer Yılmaz was born in a "state hospital," entirely oblivious to the meaning of words like "hospital" (and especially "state.") It would be years before he would fully grasp that this hospital was located in a country called Türkiye.`,
+          `He began his musical journey with the bağlama (another instrument probably of West Asia origin) at the age of ten. For a time, he explored instruments like percussion and the oud, but from 2000 onward, he devoted himself entirely to the qanun.`,
+          `In 2000, he was admitted to the Antalya Anatolian Fine Arts High School, where he studied for one year. In September 2001, he took the entrance exams for the Istanbul Technical University Turkish Music State Conservatory High School Unit (by that time, he had started to grasp what 'state' truly meant) and succeeded, marking the beginning of a significant chapter in his musical education. That same year, he had the privilege of meeting Göksel Baktagir, a master of the qanun and a composer whose contributions to Turkish music would leave an indelible mark on both the art form and Sezer's journey. During this period, he honed his craft under the guidance of Erol Deran for qanun performance and deepened his understanding of repertoire through lessons with the renowned songwriter Erol Sayan.`,
+          `At just sixteen, he performed his first concert alongside his violinist friend, Haluk Yılmaz. Shortly after, he had the honour of appearing as a guest artist at several of his teacher Göksel Baktagir's concerts, collaborating on memorable pieces with the master himself. He performed the qanun in numerous cities across Türkiye, as well as in Portugal, Denmark, Japan, Canada, Spain, the Netherlands, Italy, Switzerland, France, Germany, Jordan, the United Arab Emirates, and Australia as part of Arkın Ilıcalı's 'Mercan Dede' project.`,
+          `In 2017, he released an album titled 'Detail', featuring Orçun Çanaklı's arrangements. The album brought together an exceptional line-up of musicians, including Volkan Öktem (drums), Alp Ersönmez (bass), Serhan Yasdıman (guitar), Yurdal Tokcan (oud), Şakir Ozan Uygan (percussion), and Haktan, whose unique vocals added to the mix.`,
+          `He imagines concluding his time by making edits to this text, occasionally wondering, "Did I go on for too long?", assuming he doesn't face a significant health crisis in the future. As of the date this text was "completed", he has no grave, and with the timing of his final heartbeat still shrouded in uncertainty, his necrology remains unwritten, awaiting the inevitable.`,
+          `He loves philosophy, literature, science and delectable food.`
+        ]
+      },
+      tr: {
+        navBooking: "Rezervasyon", navVideos: "VİDEOLAR", navBio: "BİYOGRAFİ",
+        titleBooking: "Rezervasyon",
+        descBooking: "Deneyiminizi ayırtmak için lütfen bu kısa formu doldurun.",
+        lblFirstName: "Ad", lblLastName: "Soyad",
+        lblEmail: "E-posta", lblPhone: "Telefon",
+        lblEventDate: "Etkinlik Tarihi", lblStartTime: "Başlangıç Saati",
+        lblEventAddress: "Etkinlik Adresi", lblEventType: "Etkinlik Türü",
+        lblPreferredSetup: "Tercih Edilen Kurulum",
+        lblMessage: "Etkinliğinizle ilgili yaklaşık süre, konuk sayısı ve diğer ilgili bilgileri ekleyebilirsiniz.",
+        lblOtherPlaceholder: "Lütfen belirtin...",
+        btnSubmit: "Gönder",
+        successTitle: "Teşekkürler", successDesc: "Başvurunuz başarıyla alındı.",
+        titleVideos: "VİDEOLAR", titleBio: "BİYOGRAFİ",
+        subtitleBio: "Enstrümanist · YouTuber · Vodcaster",
+        chkSolo: "Solo Kanun", chkDj: "Kanun & DJ Set",
+        eventOptions: [
+          { val: "", text: "", disabled: true },
+          { val: "Musical Meditation Session", text: "Müzikal Meditasyon Seansı" },
+          { val: "Concert/Recital", text: "Konser / Resital" },
+          { val: "Engagement Ceremony", text: "Nişan Töreni" },
+          { val: "Wedding", text: "Düğün" },
+          { val: "Brunch, Lunch or Dinner", text: "Brunch, Öğle veya Akşam Yemeği" },
+          { val: "Corporate Event/Conference/Opening", text: "Kurumsal Etkinlik / Konferans / Açılış" },
+          { val: "Other", text: "Diğer" }
+        ],
+        bio: [
+          `19 Ocak'ın Pazar gününe denk geldiği –belki de hiç doğmamış olan olan İsa'dan sonra– 1986 yılında, devlet henüz kendisine varlığını hissettirmemişken, kime veya neye ait olduğunu bilmediği, 'hastane' denen bir binânın birinci katındaki güney cepheli bir odada dünyaya geldiği tanıklar tarafından onaylı olan Sezer Yılmaz'ın, bu hastanenin bulunduğu şehrin Burdur olduğunu öğrenmesi birkaç yıl sürdü. 'Dünya' isimli gezegenin ülkelere ayrılmış olduğunu öğrenip bunu gereksiz bulduğunda daha muntazam Türkçe konuşmakta, elleriyle bazı aletleri kullanabilmekte ve elbette 'litosfer'de iki ayak üzerinde rahatça hareket edebilmekteydi.`,
+          `Doğum anının, –dakikasına kadar bilinmiyor olsa da– 12:30-12:54 arası olduğu kesine yakındır. (Tam dakika ve mümkünse saniye halen aranmaktadır.)`,
+          `Doğumunun ertesi günü Abant Gölü ve Aras Nehri'nin donması Ocak ayının sert mizacının insanlar tarafından kanıksanmış olması sayesinde olağan karşılandı ve kendisi meşum bir çocuk ilan edilmedi.`,
+          `Anne ve babasının iş hayatından mütevellit hayatının ilk üç yılında en sık gördüğü iki insan anneannesi ve dedesiydi. Sonraki üç yılının büyük kısmını da okul öncesi eğitimle geçirdikten sonra 14 Eylül 1992'de okul hayatı başlatıldı.`,
+          `Yaklaşık on yaşındayken, bağlamayla müziğe başladı. (Bu sahih bir rivayet olarak gösterilse de, daha öncesinde ıslıkla, dönemin popüler eserlerini yorumlama girişimleri olmuştur. Ayrıca şu an kim olduğunu hatırlamadığı bir amcanın kendisine mızıka hediye ettiğini dahi anımsamaktadır ve evet, mızıka kariyeri çok kısa sürmüştür.)`,
+          `Sonraki bir buçuk yıl, kendisi için futbol ile müzik arasındaki seçiminin kesinleşme süreci oldu. Kullanımdaki bedeninin, dünyadaki on ikinci yılı dolmadan kararını verdi ve biletlerin, maçın yapıldığı 'beton sahadaki eksikliklerin giderilmesi' için satıldığı maçla jübilesini yaptı.`,
+          `'Birinci sınıf'tan sonra, gittikçe kalitenin düşmesinden midir bilinmez, dördüncü sınıfın sonundan îtibâren ders çalışmaya ayırdığı süre azalınca notlarında kısmî bir inhitat görüldü. Lakin izan yeteneğinde aynı gerileme görülmediği için kitap okumaya ve müzik dinlemeye ayırdığı süreyi artırdı ve ilk ve orta tedris hayatı boyunca pek çok etkinlikte ud ve bağlamayla yer aldı.`,
+          `İptidai talebeliği yılları 1997 yazında son buldu. O zamanlar "İlköğretim'in ikinci kademesi" denilen kısmını ise 2000 yılında tamamladı. Aynı yıl, Antalya Anadolu Güzel Sanatlar Lisesi'ni kazandı. Bu okulda 2001 yılının Haziran ayına kadar İngilizce hazırlık okuduğu iddia edilse de, korteksinin incelemesi neticesinde bunu kanıtlayacak hiçbir şey bulunamamasına mukâbil, kânunla alâkalı datanın yoğunluğu göze çarptı. (Bu sebepten olsa gerek, 'kendisini pek âmâde hissetmediği için, bu okula devam etmemeyi tercih etmedi' diye yazılırsa doğru olmaz.)`,
+          `2001 yılının Eylül ayında, İstanbul Teknik Üniversitesi Türk Müziği Devlet Konservatuarı Lise Birimi'nin sınavlarında girdi ve ardından muvaffak olduğu açıklandı… Aynı sene, Türk Müziği'ne büyük katkıları olan kânun üstâdı ve bestekâr Göksel Baktagir'le tanıştı. Maahazâ, İ.T.Ü'de Prof. Erol Deran'dan kânun, Erol Sayan'dan repertuar dersi aldı.`,
+          `2002'nin Eylül ayında, kemânî arkadaşı Haluk Yılmaz ve diğer konuk sanatkâr arkadaşlarıyla birlikte konser verdi… İ.T.Ü Türk Müziği Devlet Konservatuarı'nda düzenlenen pek çok faaliyette yer aldı.`,
+          `'İstanbul Sâzendeleri' isimli grubun bâzı konserlerinde 'mihman sâzende' olarak sahnede bulundu ve 3 Nisan 2004'te aynı grubun kurucusu olan Göksel Baktagir'le aynı sahnede, onun 'Atlantis' isimli eserini yorumlama şansını yakaladı. (Bu vakadan birkaç ay önce hallak ile olan düzenli ilişikisini -6 Aralık 2015'e kadar- kestiği bilgisi kesinlikle doğru olsa da, bunu burada yazmanın anlam yükü pek hafiftir. Hele hele son ilişkinin 10 Şubat 2004'te kurulduğunu son derece net olarak belirtmek, klavyedeki tuşlara basmadan bu yazıyı yazmaya çalışmak kadar beyhûde bir davranıştır.)`,
+          `Arkın Ilıcalı'nın 'Mercan Dede' isimli projesi kapsamında yurt içindeki pek çok şehirde, Antarktika ve Afrika dışındaki kıtaların pek çok ülkesinde (Portekiz, Danimarka, Japonya, Kanada, İspanya, Hollanda, İtalya, İsviçre, Fransa, Almanya, Ürdün, Birleşik Arap Emirlikleri ve Avustralya) kanun çaldı. (Bu Sezer Yılmaz'ın Afrika'ya ayak basmadığı anlamına gelmemektedir; başka bir vesîleyle “elbette Afrika dâhil” edilmiştir.)`,
+          `Boeing pilotu olan kardeşi Ozan'ı, atmosfer dışına çıkabileceği bir araca terfi ettirebilmek umuduyla NASA'ya başvurmaya yönlendirmeye çalışmış fakat şu âna kadar başarılı olamamıştır. Bu yüzden ömrünü Samanyolu'nun Orion Kolu'ndan dışarı çıkamadan geçirecek olması 'neredeyse kesin'dir (zîrâ henüz stratosfere vasıl olduğu vâkî değildir). Buna rağmen aksi bir durum gerçekleşir de daha uzaklara gidecek olursa <a href="https://x.com/sezeryilmaz" target="_blank">x.com/sezeryilmaz</a> adresinden muhakkak insanlığa bildireceğinin sözünü –işte burada– yazılı olarak vermiştir. Deniz seviyesinden en fazla birkaç bin metre uzaklaşabileceği saniyeler (belki de yıllar) boyunca –büyük bir sıhhi bun yaşamazsa bu metinde değişiklikler yaparak ve arada bir “Yoksa çok mu uzattım?” diye düşünerek misâfirliğini nihayetlendirmeyi tasavvur etmektedir.`,
+          `'Detay' isimli albümü 2017'de yayınlanmıştır.`,
+          `İkinci YouTube kanalı olan <a href="https://youtube.com/@amatorflanor" target="_blank">Amatör Flanör</a>'de tek başına veya bir başkasıyla bazı konular üzerine konuşmaya devam etmektedir.`,
+          `Bu metnin "tamamlandığı" tarih itibarı ile bir makberi olmadığı gibi henüz kalbinin durmasına sebep olacak hadise dahi gayrimuayyen olduğu için nekrolojisi yazılmayı beklemektedir.`
+        ]
+      }
+    };
+
+    // ── POPULATE TIME DROPDOWNS ────────────────────────────────
+    const enHour = document.getElementById('en-hour');
+    const enMinute = document.getElementById('en-minute');
+    const trHour = document.getElementById('tr-hour');
+    const trMinute = document.getElementById('tr-minute');
+
+    for (let h = 1; h <= 12; h++) {
+      const opt = document.createElement('option');
+      opt.value = String(h).padStart(2, '0');
+      opt.textContent = String(h).padStart(2, '0');
+      enHour.appendChild(opt);
+    }
+    for (let h = 0; h <= 23; h++) {
+      const opt = document.createElement('option');
+      opt.value = String(h).padStart(2, '0');
+      opt.textContent = String(h).padStart(2, '0');
+      trHour.appendChild(opt);
+    }
+    for (let m = 0; m <= 55; m += 5) {
+      const optEn = document.createElement('option');
+      optEn.value = String(m).padStart(2, '0');
+      optEn.textContent = String(m).padStart(2, '0');
+      enMinute.appendChild(optEn);
+
+      const optTr = document.createElement('option');
+      optTr.value = String(m).padStart(2, '0');
+      optTr.textContent = String(m).padStart(2, '0');
+      trMinute.appendChild(optTr);
+    }
+
+    // ── LANGUAGE & UI SWITCHER ─────────────────────────────────────
+    let currentLang = 'en';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+
+      const t = translations[lang];
+
+      document.getElementById('nav-booking').textContent    = t.navBooking;
+      document.getElementById('nav-videos').textContent     = t.navVideos;
+      document.getElementById('nav-bio').textContent        = t.navBio;
+      document.getElementById('title-booking').textContent  = t.titleBooking;
+      document.getElementById('desc-booking').textContent   = t.descBooking;
+      document.getElementById('lbl-first-name').textContent = t.lblFirstName;
+      document.getElementById('lbl-last-name').textContent  = t.lblLastName;
+      document.getElementById('lbl-email').textContent      = t.lblEmail;
+      document.getElementById('lbl-phone').textContent      = t.lblPhone;
+      document.getElementById('lbl-event-date').textContent = t.lblEventDate;
+      document.getElementById('lbl-start-time').textContent = t.lblStartTime;
+      document.getElementById('lbl-event-address').textContent = t.lblEventAddress;
+      document.getElementById('lbl-event-type').textContent = t.lblEventType;
+      document.getElementById('lbl-preferred-setup').textContent = t.lblPreferredSetup;
+      document.getElementById('message-label').textContent  = t.lblMessage;
+      document.getElementById('other-event-type').placeholder = t.lblOtherPlaceholder;
+      document.getElementById('btn-submit').textContent     = t.btnSubmit;
+      document.getElementById('txt-success-title').textContent = t.successTitle;
+      document.getElementById('txt-success-desc').textContent  = t.successDesc;
+      document.getElementById('title-videos').textContent   = t.titleVideos;
+      document.getElementById('title-bio').textContent      = t.titleBio;
+      document.getElementById('subtitle-bio').textContent   = t.subtitleBio;
+      document.getElementById('chk-solo-label').textContent = t.chkSolo;
+      document.getElementById('chk-dj-label').textContent   = t.chkDj;
+
+      const sel = document.getElementById('event-type');
+      const prevVal = sel.value;
+      sel.innerHTML = '';
+      t.eventOptions.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o.val;
+        opt.textContent = o.text;
+        if (o.disabled) { opt.disabled = true; opt.selected = true; }
+        if (o.val === prevVal) { opt.selected = true; }
+        sel.appendChild(opt);
+      });
+
+      const bioContainer = document.getElementById('bio-content');
+      bioContainer.innerHTML = '';
+      t.bio.forEach(text => {
+        const p = document.createElement('p');
+        p.innerHTML = text;
+        bioContainer.appendChild(p);
+      });
+
+      const dateEnWrapper  = document.getElementById('date-en-wrapper');
+      const dateTrWrapper  = document.getElementById('date-tr-wrapper');
+      const timeEnWrapper  = document.getElementById('time-en-wrapper');
+      const timeTrWrapper  = document.getElementById('time-tr-wrapper');
+      const eventDateEn    = document.getElementById('event-date-en');
+      const eventDateTr    = document.getElementById('event-date-tr');
+
+      if (lang === 'tr') {
+        dateEnWrapper.style.display = 'none';
+        dateTrWrapper.style.display = 'block';
+        eventDateEn.removeAttribute('required');
+        eventDateTr.setAttribute('required', 'true');
+        
+        timeEnWrapper.style.display = 'none';
+        timeTrWrapper.style.display = 'flex';
+        enHour.removeAttribute('required');
+        enMinute.removeAttribute('required');
+        trHour.setAttribute('required', 'true');
+        trMinute.setAttribute('required', 'true');
+      } else {
+        dateEnWrapper.style.display = 'block';
+        dateTrWrapper.style.display = 'none';
+        eventDateTr.removeAttribute('required');
+        eventDateEn.setAttribute('required', 'true');
+        
+        timeEnWrapper.style.display = 'flex';
+        timeTrWrapper.style.display = 'none';
+        trHour.removeAttribute('required');
+        trMinute.removeAttribute('required');
+        enHour.setAttribute('required', 'true');
+        enMinute.setAttribute('required', 'true');
+      }
+    }
+
+    async function detectLocationLanguage() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        setLanguage(data && data.country_code === 'TR' ? 'tr' : 'en');
+      } catch {
+        setLanguage('en');
+      }
+    }
+
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Past dates prevention logic
-    const dateInput = document.getElementById('event-date');
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    dateInput.min = `${yyyy}-${mm}-${dd}`;
-
-    // Modern AM/PM Toggle Logic
-    const timeInput = document.getElementById('event-time');
-    const btnAm = document.getElementById('btn-am');
-    const btnPm = document.getElementById('btn-pm');
-    const hiddenTimeInput = document.getElementById('hidden-event-time');
+    // AM/PM toggle
     let currentPeriod = 'PM';
-
-    // Mask typing format (Adds colon automatically: HH:MM)
-    timeInput.addEventListener('input', function(e) {
-      let value = e.target.value.replace(/[^0-9]/g, '');
-      if (value.length > 2) {
-        value = value.slice(0, 2) + ':' + value.slice(2, 4);
-      }
-      e.target.value = value.slice(0, 5);
-    });
-
-    btnAm.addEventListener('click', () => {
-      btnAm.classList.add('active');
-      btnPm.classList.remove('active');
+    document.getElementById('btn-am').addEventListener('click', () => {
+      document.getElementById('btn-am').classList.add('active');
+      document.getElementById('btn-pm').classList.remove('active');
       currentPeriod = 'AM';
     });
-
-    btnPm.addEventListener('click', () => {
-      btnPm.classList.add('active');
-      btnAm.classList.remove('active');
+    document.getElementById('btn-pm').addEventListener('click', () => {
+      document.getElementById('btn-pm').classList.add('active');
+      document.getElementById('btn-am').classList.remove('active');
       currentPeriod = 'PM';
     });
 
-    const eventTypeSelect = document.getElementById('event-type');
-    const secondaryOptions = document.getElementById('secondary-options');
-    const checkboxes = secondaryOptions.querySelectorAll('input[type="checkbox"]');
+    // Event type logic: 'Other' field & Secondary Setup options
+    document.getElementById('event-type').addEventListener('change', function() {
+      const isOther = this.value === 'Other';
+      const otherWrapper = document.getElementById('other-event-wrapper');
+      const otherInput = document.getElementById('other-event-type');
 
-    eventTypeSelect.addEventListener('change', function () {
-      const isMeditation = this.value === 'Musical Meditation Session';
-      if (isMeditation) {
-        secondaryOptions.classList.remove('visible');
-        checkboxes.forEach(cb => { cb.checked = false; });
+      if (isOther) {
+        otherWrapper.style.display = 'block';
+        otherInput.setAttribute('required', 'true');
       } else {
-        secondaryOptions.classList.add('visible');
+        otherWrapper.style.display = 'none';
+        otherInput.removeAttribute('required');
+        otherInput.value = '';
       }
+
+      // Her durumda kurulum seçeneklerini göster (veya gizle)
+      const sec = document.getElementById('secondary-options');
+      sec.classList.add('visible');
     });
 
+    // Form submit
     const form = document.getElementById('booking-form');
     const successMsg = document.getElementById('form-success');
 
-    form.addEventListener('submit', async function (e) {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
-      
-      // Combine time input and AM/PM toggle value right before submission
-      hiddenTimeInput.value = `${timeInput.value} ${currentPeriod}`;
 
-      // FormData direct compilation (Clean form data state)
+      const hiddenDate = document.getElementById('hidden-event-date');
+      const hiddenTime = document.getElementById('hidden-event-time');
+
+      if (currentLang === 'tr') {
+        hiddenDate.value = document.getElementById('event-date-tr').value;
+        const h = document.getElementById('tr-hour').value;
+        const m = document.getElementById('tr-minute').value;
+        hiddenTime.value = (h && m) ? `${h}:${m}` : '';
+      } else {
+        hiddenDate.value = document.getElementById('event-date-en').value;
+        const h = document.getElementById('en-hour').value;
+        const m = document.getElementById('en-minute').value;
+        hiddenTime.value = (h && m) ? `${h}:${m} ${currentPeriod}` : '';
+      }
+
       const data = new FormData(form);
+      data.delete('event-date-en');
+      data.delete('event-date-tr');
+      data.delete('en-hour');
+      data.delete('en-minute');
+      data.delete('tr-hour');
+      data.delete('tr-minute');
 
       try {
         await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(data).toString(),
+          body: new URLSearchParams(data).toString()
         });
         form.style.display = 'none';
         successMsg.style.display = 'block';
@@ -780,7 +1043,7 @@
       }
     });
 
-    // Carousel state
+    // Carousel
     const track = document.getElementById('video-track');
     const slides = track.querySelectorAll('.video-slide');
     const prevBtn = document.getElementById('video-prev');
@@ -790,33 +1053,19 @@
 
     function updateCarousel() {
       const perView = window.innerWidth <= 580 ? 1 : 2;
-      
-      if (index > totalSlides - perView) {
-        index = Math.max(0, totalSlides - perView);
-      }
-
+      if (index > totalSlides - perView) index = Math.max(0, totalSlides - perView);
       const slideWidth = slides[0].getBoundingClientRect().width;
-      const gap = 16; // 1rem gap
-      track.style.transform = `translateX(-${index * (slideWidth + gap)}px)`;
-      
+      track.style.transform = `translateX(-${index * (slideWidth + 16)}px)`;
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index >= totalSlides - perView;
     }
 
-    prevBtn.addEventListener('click', () => {
-      const perView = window.innerWidth <= 580 ? 1 : 2;
-      index = Math.max(0, index - perView);
-      updateCarousel();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      const perView = window.innerWidth <= 580 ? 1 : 2;
-      index = Math.min(totalSlides - perView, index + perView);
-      updateCarousel();
-    });
+    prevBtn.addEventListener('click', () => { index = Math.max(0, index - (window.innerWidth <= 580 ? 1 : 2)); updateCarousel(); });
+    nextBtn.addEventListener('click', () => { index = Math.min(totalSlides - (window.innerWidth <= 580 ? 1 : 2), index + (window.innerWidth <= 580 ? 1 : 2)); updateCarousel(); });
 
     window.addEventListener('resize', updateCarousel);
     updateCarousel();
+    detectLocationLanguage();
   </script>
 
 </body>
