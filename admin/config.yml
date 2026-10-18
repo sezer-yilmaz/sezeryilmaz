@@ -1,0 +1,21 @@
+backend:
+  name: git-gateway
+  branch: main # Eğer ana dalının adı 'master' ise burayı master yap
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "content"
+    label: "İçerik Yönetimi"
+    files:
+      - file: "content/en.json"
+        label: "İngilizce İçerik (EN)"
+        name: "en"
+        fields:
+          - { label: "Biyografi Paragrafları", name: "bio", widget: "list" }
+      - file: "content/tr.json"
+        label: "Türkçe İçerik (TR)"
+        name: "tr"
+        fields:
+          - { label: "Biyografi Paragrafları", name: "bio", widget: "list" }
