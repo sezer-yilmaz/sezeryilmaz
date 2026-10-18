@@ -43,6 +43,8 @@ collections:
               - { label: "Değer (ID)", name: "val", widget: "string" }
               - { label: "Görünen Metin", name: "text", widget: "string" }
           - { label: "Biyografi Paragrafları", name: "bio", widget: "list" }
+          - { label: "Sol Logo / Fotoğraf", name: "headerImgLeft", widget: "image" }
+          - { label: "Sağ Logo / Fotoğraf", name: "headerImgRight", widget: "image" }
 
       - file: "content/tr.json"
         label: "Türkçe İçerik (TR)"
@@ -78,3 +80,5 @@ collections:
               - { label: "Değer (ID)", name: "val", widget: "string" }
               - { label: "Görünen Metin", name: "text", widget: "string" }
           - { label: "Biyografi Paragrafları", name: "bio", widget: "list" }
+          - { label: "Sol Logo / Fotoğraf", name: "headerImgLeft", widget: "image" }
+          - { label: "Sağ Logo / Fotoğraf", name: "headerImgRight", widget: "image" }
