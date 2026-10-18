@@ -275,6 +275,7 @@
       cursor: pointer;
     }
 
+    select:invalid { color: rgba(107, 101, 96, 0.55); }
     select option { background: var(--surface); color: var(--white); }
 
     textarea {
@@ -944,18 +945,19 @@
       const prevVal = sel.value;
       sel.innerHTML = '';
       
+      // SABİT SİLİK İPUCU METNİNİ EKLEME (JSON'dan bağımsız)
+      const placeholderOpt = document.createElement('option');
+      placeholderOpt.value = "";
+      placeholderOpt.textContent = lang === 'tr' ? "Etkinlik Türü *" : "Event Type *";
+      placeholderOpt.disabled = true;
+      placeholderOpt.hidden = true;
+      sel.appendChild(placeholderOpt);
+
       if (t.eventOptions) {
-        t.eventOptions.forEach((o, i) => {
+        t.eventOptions.forEach((o) => {
           const opt = document.createElement('option');
           opt.textContent = o.text;
-          
-          if (i === 0) { 
-            opt.value = ""; // Placeholder değerini kesinleştirir
-            opt.disabled = true; 
-            opt.hidden = true; 
-          } else {
-            opt.value = o.val;
-          }
+          opt.value = o.val;
           sel.appendChild(opt);
         });
       }
@@ -975,7 +977,7 @@
         sel.value = ""; 
       }
 
-      // UI ve renk güncellemesi için change olayını tetikle
+      // Renk güncellemesi için change olayını tetikle
       sel.dispatchEvent(new Event('change'));
 
       const bioContainer = document.getElementById('bio-content');
@@ -1166,5 +1168,3 @@
 
 </body>
 </html>
-
-```
