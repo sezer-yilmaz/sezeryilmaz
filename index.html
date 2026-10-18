@@ -39,6 +39,7 @@
       padding: 3rem 2rem 2rem;
       text-align: center;
       border-bottom: 1px solid var(--border);
+      position: relative;
     }
 
     .header-title-wrap {
@@ -46,7 +47,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      max-width: 720px; /* Alttaki sosyal medya şeridinin ve ana içeriğin genişliğiyle eşitler */
+      max-width: 720px;
       margin: 0 auto;
       min-height: 120px;
     }
@@ -55,7 +56,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      height: 120px; /* Görsel yüksekliği */
+      height: 120px;
       width: auto;
       max-width: 150px;
       object-fit: contain;
@@ -279,7 +280,8 @@
       cursor: pointer;
     }
 
-    select option { background: var(--surface); }
+    select:invalid { color: rgba(107, 101, 96, 0.55); }
+    select option { background: var(--surface); color: var(--white); }
 
     textarea {
       resize: vertical;
@@ -606,10 +608,6 @@
             <input type="hidden" name="event-date" id="hidden-event-date" />
             <input type="hidden" name="event-time" id="hidden-event-time" />
           </div>
-        </div>
-
-        <div class="form-group">
-          <input type="text" id="event-address" name="event-address" required />
         </div>
 
         <div class="form-group">
@@ -956,8 +954,15 @@
           const opt = document.createElement('option');
           opt.value = o.val;
           opt.textContent = o.text;
-          if (i === 0) { opt.disabled = true; opt.selected = true; }
-          if (o.val === prevVal) { opt.selected = true; }
+          
+          if (i === 0) { 
+            opt.disabled = true; 
+            opt.hidden = true; 
+            if (!prevVal || prevVal === "") opt.selected = true; 
+          } else if (o.val === prevVal && prevVal !== "") { 
+            opt.selected = true; 
+          }
+          
           sel.appendChild(opt);
         });
       }
