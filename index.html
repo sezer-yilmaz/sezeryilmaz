@@ -1,3 +1,10 @@
+Görselden de anlaşıldığı üzere, "Event Type" menüsü açıldığında ilk seçenek olan "Musical Meditation Session" beyaz ve aktif bir şekilde otomatik seçili olarak geliyor. Bunun sebebi, tarayıcının veya sistemin ilk boş elemanı (ipucu metnini) geçerli bir değer olarak saymayıp doğrudan altındaki ilk gerçek seçeneğe atlamasıdır.
+
+Bunu kesin olarak çözmek ve "Event Type / Etkinlik Türü" yazısının tıpkı diğer kutulardaki gibi %55 parlaklıkta (silik) durmasını sağlamak için JavaScript tarafına çok daha sağlam bir "Placeholder (İpucu) Zorlayıcı" mantık ekledim. Artık form ilk yüklendiğinde hiçbir etkinlik türü seçilmeyecek ve ipucu metni %55 şeffaflıktaki gri tonla gösterilecek.
+
+Tüm bu güncellemeleri içeren, baştan sona eksiksiz son kod aşağıdadır. Kopyalayıp doğrudan **`index.html`** dosyasına yapıştırabilirsin.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,13 +76,8 @@
       transform: translateY(-50%) scale(1.05);
     }
 
-    #img-header-left {
-      left: 0;
-    }
-
-    #img-header-right {
-      right: 0;
-    }
+    #img-header-left { left: 0; }
+    #img-header-right { right: 0; }
 
     /* LANGUAGE SWITCHER */
     .lang-switcher {
@@ -259,7 +261,7 @@
       font-size: 0.95rem;
       padding: 0.75rem 1rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, color 0.2s;
       width: 100%;
       appearance: none;
       -webkit-appearance: none;
@@ -280,7 +282,6 @@
       cursor: pointer;
     }
 
-    select:invalid { color: rgba(107, 101, 96, 0.55); }
     select option { background: var(--surface); color: var(--white); }
 
     textarea {
@@ -949,23 +950,40 @@
       const sel = document.getElementById('event-type');
       const prevVal = sel.value;
       sel.innerHTML = '';
+      
       if (t.eventOptions) {
         t.eventOptions.forEach((o, i) => {
           const opt = document.createElement('option');
-          opt.value = o.val;
           opt.textContent = o.text;
           
           if (i === 0) { 
+            opt.value = ""; // Placeholder değerini kesinleştirir
             opt.disabled = true; 
             opt.hidden = true; 
-            if (!prevVal || prevVal === "") opt.selected = true; 
-          } else if (o.val === prevVal && prevVal !== "") { 
-            opt.selected = true; 
+          } else {
+            opt.value = o.val;
           }
-          
           sel.appendChild(opt);
         });
       }
+
+      // Daha önce seçilmiş geçerli bir değer varsa onu geri getir, yoksa Placeholder'ı seç
+      let valExists = false;
+      for (let i = 1; i < sel.options.length; i++) {
+        if (sel.options[i].value === prevVal && prevVal !== "") {
+          valExists = true;
+          break;
+        }
+      }
+
+      if (valExists) {
+        sel.value = prevVal;
+      } else {
+        sel.value = ""; 
+      }
+
+      // UI ve renk güncellemesi için change olayını tetikle
+      sel.dispatchEvent(new Event('change'));
 
       const bioContainer = document.getElementById('bio-content');
       bioContainer.innerHTML = '';
@@ -1034,8 +1052,15 @@
       currentPeriod = 'PM';
     });
 
-    // Event type logic: 'Other' field & Secondary Setup options
+    // Event type logic: 'Other' field, Placeholder Color & Secondary Setup options
     document.getElementById('event-type').addEventListener('change', function() {
+      // Placeholder için %55 opacity rengini ayarlama
+      if (this.value === "" || this.value === null) {
+        this.style.color = "rgba(107, 101, 96, 0.55)";
+      } else {
+        this.style.color = "var(--white)";
+      }
+
       const isOther = this.value === 'Other';
       const otherWrapper = document.getElementById('other-event-wrapper');
       const otherInput = document.getElementById('other-event-type');
@@ -1050,7 +1075,9 @@
       }
 
       const sec = document.getElementById('secondary-options');
-      if (this.value === 'Musical Meditation Session') {
+      if (this.value === "") {
+        sec.classList.remove('visible');
+      } else if (this.value === 'Musical Meditation Session') {
         sec.classList.remove('visible');
         document.getElementById('chk-solo').checked = false;
         document.getElementById('chk-dj').checked = false;
@@ -1146,3 +1173,5 @@
 
 </body>
 </html>
+
+```
