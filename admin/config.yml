@@ -1,44 +1,80 @@
-{
-  "navBooking": "Booking",
-  "navVideos": "Videos",
-  "navBio": "Biography",
-  "titleBooking": "Booking",
-  "descBooking": "Please complete this short form to book your experience.",
-  "lblFirstName": "First Name",
-  "lblLastName": "Last Name",
-  "lblEmail": "Email",
-  "lblPhone": "Phone",
-  "lblEventDate": "Event Date",
-  "lblStartTime": "Start Time",
-  "lblEventAddress": "Event Address",
-  "lblPreferredSetup": "Preferred Setup",
-  "lblMessage": "You may include details about your event such as the approximate duration, number of guests, and any other relevant information here.",
-  "lblOtherPlaceholder": "Please specify...",
-  "btnSubmit": "Submit",
-  "successTitle": "Thank You",
-  "successDesc": "Your submission has been received.",
-  "titleVideos": "Videos",
-  "titleBio": "Biography",
-  "subtitleBio": "instrumentalist · qanun player",
-  "chkSolo": "Solo Qanun",
-  "chkDj": "Qanun & DJ Set",
-  "eventOptions": [
-    { "val": "", "text": "Event Type *" },
-    { "val": "Musical Meditation Session", "text": "Musical Meditation Session" },
-    { "val": "Concert/Recital", "text": "Concert / Recital" },
-    { "val": "Engagement / Wedding", "text": "Engagement / Wedding" },
-    { "val": "Birthday Party / Anniversary", "text": "Birthday Party / Anniversary" },
-    { "val": "Brunch, Lunch or Dinner", "text": "Brunch, Lunch or Dinner" },
-    { "val": "Corporate Event/Conference/Opening", "text": "Corporate Event / Conference / Opening" },
-    { "val": "Other", "text": "Other" }
-  ],
-  "bio": [
-    "On the morning of Sunday, January 19, 1986, Sezer Yılmaz was born in a \"state hospital,\" entirely oblivious to the meaning of words like \"hospital\" (and especially \"state.\") It would be years before he would fully grasp that this hospital was located in a country called Türkiye.",
-    "He began his musical journey with the bağlama (another instrument probably of West Asia origin) at the age of ten. For a time, he explored instruments like percussion and the oud, but from 2000 onward, he devoted himself entirely to the qanun.",
-    "In 2000, he was admitted to the Antalya Anatolian Fine Arts High School, where he studied for one year. In September 2001, he took the entrance exams for the Istanbul Technical University Turkish Music State Conservatory High School Unit (by that time, he had started to grasp what 'state' truly meant) and succeeded, marking the beginning of a significant chapter in his musical education. That same year, he had the privilege of meeting Göksel Baktagir, a master of the qanun and a composer whose contributions to Turkish music would leave an indelible mark on both the art form and Sezer's journey. During this period, he honed his craft under the guidance of Erol Deran for qanun performance and deepened his understanding of repertoire through lessons with the renowned songwriter Erol Sayan.",
-    "At just sixteen, he performed his first concert alongside his violinist friend, Haluk Yılmaz. Shortly after, he had the honour of appearing as a guest artist at several of his teacher Göksel Baktagir's concerts, collaborating on memorable pieces with the master himself. He performed the qanun in numerous cities across Türkiye, as well as in Portugal, Denmark, Japan, Canada, Spain, the Netherlands, Italy, Switzerland, France, Germany, Jordan, the United Arab Emirates, and Australia as part of Arkın Ilıcalı's 'Mercan Dede' project.",
-    "In 2017, he released an album titled 'Detail', featuring Orçun Çanaklı's arrangements. The album brought together an exceptional line-up of musicians, including Volkan Öktem (drums), Alp Ersönmez (bass), Serhan Yasdıman (guitar), Yurdal Tokcan (oud), Şakir Ozan Uygan (percussion), and Haktan, whose unique vocals added to the mix.",
-    "He imagines concluding his time by making edits to this text, occasionally wondering, \"Did I go on for too long?\", assuming he doesn't face a significant health crisis in the future. As of the date this text was \"completed\", he has no grave, and with the timing of his final heartbeat still shrouded in uncertainty, his necrology remains unwritten, awaiting the inevitable.",
-    "He loves philosophy, literature, science and delectable food."
-  ]
-}
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "content"
+    label: "Sistem ve İçerik Metinleri"
+    files:
+      - file: "content/en.json"
+        label: "İngilizce İçerik (EN)"
+        name: "en"
+        fields:
+          - { label: "Navigasyon - Booking", name: "navBooking", widget: "string" }
+          - { label: "Navigasyon - Videos", name: "navVideos", widget: "string" }
+          - { label: "Navigasyon - Biography", name: "navBio", widget: "string" }
+          - { label: "Booking Başlığı", name: "titleBooking", widget: "string" }
+          - { label: "Booking Açıklaması", name: "descBooking", widget: "string" }
+          - { label: "Form - Ad", name: "lblFirstName", widget: "string" }
+          - { label: "Form - Soyad", name: "lblLastName", widget: "string" }
+          - { label: "Form - E-posta", name: "lblEmail", widget: "string" }
+          - { label: "Form - Telefon", name: "lblPhone", widget: "string" }
+          - { label: "Form - Etkinlik Tarihi", name: "lblEventDate", widget: "string" }
+          - { label: "Form - Başlangıç Saati", name: "lblStartTime", widget: "string" }
+          - { label: "Form - Etkinlik Adresi", name: "lblEventAddress", widget: "string" }
+          - { label: "Form - Tercih Edilen Kurulum", name: "lblPreferredSetup", widget: "string" }
+          - { label: "Form - Mesaj Kutusu Açıklaması", name: "lblMessage", widget: "string" }
+          - { label: "Form - Diğer (Açıklama Kutusu)", name: "lblOtherPlaceholder", widget: "string" }
+          - { label: "Form - Gönder Butonu", name: "btnSubmit", widget: "string" }
+          - { label: "Form - Başarı Başlığı", name: "successTitle", widget: "string" }
+          - { label: "Form - Başarı Açıklaması", name: "successDesc", widget: "string" }
+          - { label: "Videos Başlığı", name: "titleVideos", widget: "string" }
+          - { label: "Biography Başlığı", name: "titleBio", widget: "string" }
+          - { label: "Biography Alt Başlığı", name: "subtitleBio", widget: "string" }
+          - { label: "Kurulum Seçeneği - Solo", name: "chkSolo", widget: "string" }
+          - { label: "Kurulum Seçeneği - DJ", name: "chkDj", widget: "string" }
+          - label: "Etkinlik Türü Seçenekleri"
+            name: "eventOptions"
+            widget: "list"
+            fields:
+              - { label: "Değer (ID)", name: "val", widget: "string" }
+              - { label: "Görünen Metin", name: "text", widget: "string" }
+          - { label: "Biyografi Paragrafları", name: "bio", widget: "list" }
+
+      - file: "content/tr.json"
+        label: "Türkçe İçerik (TR)"
+        name: "tr"
+        fields:
+          - { label: "Navigasyon - Booking", name: "navBooking", widget: "string" }
+          - { label: "Navigasyon - Videos", name: "navVideos", widget: "string" }
+          - { label: "Navigasyon - Biography", name: "navBio", widget: "string" }
+          - { label: "Booking Başlığı", name: "titleBooking", widget: "string" }
+          - { label: "Booking Açıklaması", name: "descBooking", widget: "string" }
+          - { label: "Form - Ad", name: "lblFirstName", widget: "string" }
+          - { label: "Form - Soyad", name: "lblLastName", widget: "string" }
+          - { label: "Form - E-posta", name: "lblEmail", widget: "string" }
+          - { label: "Form - Telefon", name: "lblPhone", widget: "string" }
+          - { label: "Form - Etkinlik Tarihi", name: "lblEventDate", widget: "string" }
+          - { label: "Form - Başlangıç Saati", name: "lblStartTime", widget: "string" }
+          - { label: "Form - Etkinlik Adresi", name: "lblEventAddress", widget: "string" }
+          - { label: "Form - Tercih Edilen Kurulum", name: "lblPreferredSetup", widget: "string" }
+          - { label: "Form - Mesaj Kutusu Açıklaması", name: "lblMessage", widget: "string" }
+          - { label: "Form - Diğer (Açıklama Kutusu)", name: "lblOtherPlaceholder", widget: "string" }
+          - { label: "Form - Gönder Butonu", name: "btnSubmit", widget: "string" }
+          - { label: "Form - Başarı Başlığı", name: "successTitle", widget: "string" }
+          - { label: "Form - Başarı Açıklaması", name: "successDesc", widget: "string" }
+          - { label: "Videos Başlığı", name: "titleVideos", widget: "string" }
+          - { label: "Biography Başlığı", name: "titleBio", widget: "string" }
+          - { label: "Biography Alt Başlığı", name: "subtitleBio", widget: "string" }
+          - { label: "Kurulum Seçeneği - Solo", name: "chkSolo", widget: "string" }
+          - { label: "Kurulum Seçeneği - DJ", name: "chkDj", widget: "string" }
+          - label: "Etkinlik Türü Seçenekleri"
+            name: "eventOptions"
+            widget: "list"
+            fields:
+              - { label: "Değer (ID)", name: "val", widget: "string" }
+              - { label: "Görünen Metin", name: "text", widget: "string" }
+          - { label: "Biyografi Paragrafları", name: "bio", widget: "list" }
