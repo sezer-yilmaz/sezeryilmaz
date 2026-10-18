@@ -45,22 +45,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.5rem;
+      position: relative;
+      max-width: 720px; /* Alttaki sosyal medya şeridinin ve ana içeriğin genişliğiyle eşitler */
       margin: 0 auto;
+      min-height: 120px;
     }
 
-    /* Görsel Boyut ve Stil Ayarları */
     .header-img {
-      height: 150px;              /* Yüksekliğini buradan istediğin gibi ayarlayabilirsin */
-      width: auto;               /* Oran bozulmasın */
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 120px; /* Görsel yüksekliği */
+      width: auto;
+      max-width: 150px;
       object-fit: contain;
-      display: none;             /* Panelden görsel yüklenene kadar gizli kalır */
-      border-radius: 4px;        /* Hafif yuvarlatılmış köşeler */
-      transition: transform 0.2s;
+      display: none;
+      border-radius: 4px;
+      transition: transform 0.2s, opacity 0.2s;
     }
 
     .header-img:hover {
-      transform: scale(1.05);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    #img-header-left {
+      left: 0;
+    }
+
+    #img-header-right {
+      right: 0;
     }
 
     /* LANGUAGE SWITCHER */
@@ -93,6 +106,7 @@
       color: var(--white);
       letter-spacing: 0.02em;
       line-height: 1.1;
+      margin: 0;
     }
 
     nav {
@@ -227,7 +241,7 @@
     input::placeholder,
     textarea::placeholder {
       color: var(--muted);
-      opacity: 0.6;
+      opacity: 0.55;
     }
 
     input::placeholder {
@@ -412,8 +426,7 @@
     .carousel-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
     .carousel-btn:disabled { opacity: 0.3; cursor: default; }
     .carousel-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    @media (max-width: 580px) { .video-slide { flex: 0 0 100%; } }
-
+    
     /* BIO */
     #bio p:not(.section-title):not(.bio-subtitle) { margin-bottom: 0.95rem; font-size: 1.05rem; }
     #bio p:last-child { margin-bottom: 0; }
@@ -424,12 +437,30 @@
     footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--muted); }
 
     /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header-title-wrap {
+        min-height: auto;
+        gap: 1.5rem;
+        flex-direction: row;
+        justify-content: center;
+      }
+      .header-img {
+        position: static;
+        transform: none;
+        height: 60px;
+      }
+      .header-img:hover {
+        transform: scale(1.05);
+      }
+    }
+
     @media (max-width: 580px) { 
       .form-row { grid-template-columns: 1fr; } 
       .datetime-row { grid-template-columns: 1fr; } 
       nav { gap: 1.2rem; } 
-      .header-title-wrap { gap: 0.8rem; }
-      .header-img { height: 38px; } /* Mobilde görselleri biraz ufaltır */
+      .header-title-wrap { gap: 1rem; }
+      .header-img { height: 45px; } 
+      .video-slide { flex: 0 0 100%; } 
     }
   </style>
 </head>
