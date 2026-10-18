@@ -1,9 +1,3 @@
-Görselden de anlaşıldığı üzere, "Event Type" menüsü açıldığında ilk seçenek olan "Musical Meditation Session" beyaz ve aktif bir şekilde otomatik seçili olarak geliyor. Bunun sebebi, tarayıcının veya sistemin ilk boş elemanı (ipucu metnini) geçerli bir değer olarak saymayıp doğrudan altındaki ilk gerçek seçeneğe atlamasıdır.
-
-Bunu kesin olarak çözmek ve "Event Type / Etkinlik Türü" yazısının tıpkı diğer kutulardaki gibi %55 parlaklıkta (silik) durmasını sağlamak için JavaScript tarafına çok daha sağlam bir "Placeholder (İpucu) Zorlayıcı" mantık ekledim. Artık form ilk yüklendiğinde hiçbir etkinlik türü seçilmeyecek ve ipucu metni %55 şeffaflıktaki gri tonla gösterilecek.
-
-Tüm bu güncellemeleri içeren, baştan sona eksiksiz son kod aşağıdadır. Kopyalayıp doğrudan **`index.html`** dosyasına yapıştırabilirsin.
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
