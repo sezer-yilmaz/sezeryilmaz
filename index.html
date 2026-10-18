@@ -34,11 +34,33 @@
       min-height: 100vh;
     }
 
-    /* HEADER */
+    /* HEADER & LOGO ALANI */
     header {
       padding: 3rem 2rem 2rem;
       text-align: center;
       border-bottom: 1px solid var(--border);
+    }
+
+    .header-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 0 auto;
+    }
+
+    /* Görsel Boyut ve Stil Ayarları */
+    .header-img {
+      height: 50px;              /* Yüksekliğini buradan istediğin gibi ayarlayabilirsin */
+      width: auto;               /* Oran bozulmasın */
+      object-fit: contain;
+      display: none;             /* Panelden görsel yüklenene kadar gizli kalır */
+      border-radius: 4px;        /* Hafif yuvarlatılmış köşeler */
+      transition: transform 0.2s;
+    }
+
+    .header-img:hover {
+      transform: scale(1.05);
     }
 
     /* LANGUAGE SWITCHER */
@@ -202,7 +224,6 @@
       margin-left: 2px;
     }
 
-    /* SILIK PLACEHOLDER DÜZENLEMESI */
     input::placeholder,
     textarea::placeholder {
       color: var(--muted);
@@ -403,7 +424,13 @@
     footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--muted); }
 
     /* RESPONSIVE */
-    @media (max-width: 580px) { .form-row { grid-template-columns: 1fr; } .datetime-row { grid-template-columns: 1fr; } nav { gap: 1.2rem; } }
+    @media (max-width: 580px) { 
+      .form-row { grid-template-columns: 1fr; } 
+      .datetime-row { grid-template-columns: 1fr; } 
+      nav { gap: 1.2rem; } 
+      .header-title-wrap { gap: 0.8rem; }
+      .header-img { height: 38px; } /* Mobilde görselleri biraz ufaltır */
+    }
   </style>
 </head>
 <body>
@@ -414,7 +441,14 @@
       <span style="color:var(--border); font-size:0.85rem;">|</span>
       <button class="lang-btn" id="lang-tr" onclick="setLanguage('tr')">TÜRKÇE</button>
     </div>
-    <h1>Sezer Yılmaz</h1>
+
+    <!-- BAŞLIK VE SAĞ/SOL GÖRSELLER -->
+    <div class="header-title-wrap">
+      <img id="img-header-left" class="header-img" alt="Header Left" />
+      <h1>Sezer Yılmaz</h1>
+      <img id="img-header-right" class="header-img" alt="Header Right" />
+    </div>
+
     <nav>
       <a href="#book" id="nav-booking">Booking</a>
       <a href="#videos" id="nav-videos">Videos</a>
@@ -837,6 +871,24 @@
 
       const t = translations[lang];
       if (!t) return;
+
+      // Header görselleri dinamik bağlama
+      const imgLeft = document.getElementById('img-header-left');
+      const imgRight = document.getElementById('img-header-right');
+
+      if (t.headerImgLeft) {
+        imgLeft.src = t.headerImgLeft;
+        imgLeft.style.display = 'block';
+      } else {
+        imgLeft.style.display = 'none';
+      }
+
+      if (t.headerImgRight) {
+        imgRight.src = t.headerImgRight;
+        imgRight.style.display = 'block';
+      } else {
+        imgRight.style.display = 'none';
+      }
 
       document.getElementById('nav-booking').textContent    = t.navBooking;
       document.getElementById('nav-videos').textContent     = t.navVideos;
