@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sezer Yılmaz</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230e0e0e%22/%3E%0A%20%20%3Ctext%20x%3D%2232%22%20y%3D%2243%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2228%22%20font-weight%3D%22700%22%20fill%3D%22%23c8b89a%22%20text-anchor%3D%22middle%22%3ESY%3C/text%3E%0A%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -200,12 +202,15 @@
       margin-left: 2px;
     }
 
-    #message-label {
-      font-size: 0.85rem;
-      letter-spacing: 0.03em;
-      text-transform: none;
-      color: var(--muted);
-      line-height: 1.6;
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--text);
+      opacity: 1;
+    }
+
+    input::placeholder {
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
     }
 
     input, select, textarea {
@@ -245,29 +250,69 @@
       min-height: 110px;
     }
 
-    input[type="date"] {
-      color-scheme: dark;
+    /* CUSTOM PICKERS (DATE & TIME) */
+    .date-picker-wrapper {
+      position: relative;
     }
 
-    /* AM/PM & TIME SELECTORS */
+    .date-picker-wrapper input[readonly] {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6560' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .date-picker-panel, .time-picker-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      z-index: 20;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.9rem;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    }
+
+    .date-picker-panel { width: 260px; }
+    .time-picker-panel { width: 100%; min-width: 200px; }
+
+    .date-picker-panel.open { display: block; }
+    .time-picker-panel.open { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    /* DATE PICKER DETAILS */
+    .dp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+    .dp-title { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); }
+    .dp-nav { background: transparent; border: 1px solid var(--border); color: var(--muted); width: 26px; height: 26px; font-size: 0.95rem; line-height: 1; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+    .dp-nav:hover { border-color: var(--accent); color: var(--accent); }
+    .dp-weekdays, .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .dp-weekdays span { text-align: center; font-size: 0.6rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); padding-bottom: 0.4rem; }
+    .dp-day { display: flex; align-items: center; justify-content: center; height: 30px; font-size: 0.8rem; color: var(--text); cursor: pointer; transition: background 0.15s, color 0.15s; }
+    .dp-day.empty { cursor: default; }
+    .dp-day:not(.empty):not(.disabled):hover { background: var(--border); color: var(--white); }
+    .dp-day.disabled { color: var(--border); cursor: default; opacity: 0.55; }
+    .dp-day.today { border: 1px solid var(--accent); }
+    .dp-day.selected { background: var(--accent); color: var(--bg); font-weight: 500; }
+
+    /* TIME PICKER DETAILS */
+    .tp-header { display: flex; justify-content: space-around; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.2rem; }
+    .tp-lists { display: flex; gap: 0.5rem; height: 160px; }
+    .tp-list { flex: 1; overflow-y: auto; background: var(--bg); border: 1px solid var(--border); padding: 0.3rem 0; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+    .tp-list::-webkit-scrollbar { display: none; }
+    .tp-item { text-align: center; padding: 0.4rem 0; font-size: 0.9rem; color: var(--text); cursor: pointer; transition: background 0.15s, color 0.15s; }
+    .tp-item:hover { background: var(--border); color: var(--white); }
+    .tp-item.active { background: var(--accent); color: var(--bg); font-weight: 500; }
+
+    /* AM/PM & TIME CONTAINERS */
     .ampm-container, .tr-time-container {
       display: flex;
       gap: 0.5rem;
       width: 100%;
     }
 
-    .time-selector {
-      display: flex;
-      gap: 0.5rem;
+    .ampm-container > .date-picker-wrapper, .tr-time-container > .date-picker-wrapper {
       flex: 1;
-    }
-
-    .time-selector select, .tr-time-container select {
-      flex: 1;
-      font-size: 0.8rem;
-      padding: 0.75rem 0.3rem;
-      padding-right: 1.4rem;
-      background-position: right 0.3rem center;
     }
 
     .ampm-toggle-group {
@@ -301,56 +346,14 @@
     }
 
     /* Secondary setup options */
-    #secondary-options {
-      display: none;
-      margin-bottom: 1rem;
-    }
-
+    #secondary-options { display: none; margin-bottom: 1rem; }
     #secondary-options.visible { display: block; }
+    .sublabel { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.8rem; }
+    .checkbox-group { display: flex; flex-direction: column; gap: 0.75rem; }
+    .checkbox-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.92rem; color: var(--text); text-transform: none; letter-spacing: 0; font-weight: 300; }
+    .checkbox-label input[type="checkbox"] { width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; appearance: auto; -webkit-appearance: auto; -moz-appearance: auto; }
 
-    .sublabel {
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: block;
-      margin-bottom: 0.8rem;
-    }
-
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      font-size: 0.92rem;
-      color: var(--text);
-      text-transform: none;
-      letter-spacing: 0;
-      font-weight: 300;
-    }
-
-    .checkbox-label input[type="checkbox"] {
-      width: 15px;
-      height: 15px;
-      flex-shrink: 0;
-      accent-color: var(--accent);
-      cursor: pointer;
-      appearance: auto;
-      -webkit-appearance: auto;
-      -moz-appearance: auto;
-    }
-
-    .datetime-row {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 1rem;
-    }
+    .datetime-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem; }
 
     button[type="submit"] {
       margin-top: 1.4rem;
@@ -366,178 +369,40 @@
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
     }
-
-    button[type="submit"]:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
+    button[type="submit"]:hover { background: var(--accent); color: var(--bg); }
 
     /* SUCCESS STATE */
-    #form-success {
-      display: none;
-      text-align: center;
-      padding: 3rem 1rem;
-    }
-
-    .success-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.4rem;
-      animation: pop 0.4s ease;
-    }
-
-    .success-icon svg {
-      width: 26px;
-      height: 26px;
-      stroke: var(--accent);
-      stroke-width: 2.5;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    @keyframes pop {
-      0%   { transform: scale(0.6); opacity: 0; }
-      70%  { transform: scale(1.1); }
-      100% { transform: scale(1);   opacity: 1; }
-    }
-
-    .success-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      font-size: 1.3rem;
-      color: var(--white);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    .success-text {
-      font-size: 0.88rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
+    #form-success { display: none; text-align: center; padding: 3rem 1rem; }
+    .success-icon { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.4rem; animation: pop 0.4s ease; }
+    .success-icon svg { width: 26px; height: 26px; stroke: var(--accent); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    .success-title { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1.3rem; color: var(--white); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .success-text { font-size: 0.88rem; color: var(--muted); letter-spacing: 0.04em; }
 
     /* VIDEOS — CAROUSEL */
-    .video-carousel {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .video-track-wrap {
-      flex: 1;
-      overflow: hidden;
-    }
-
-    .video-track {
-      display: flex;
-      gap: 1rem;
-      transition: transform 0.4s ease;
-    }
-
-    .video-slide {
-      flex: 0 0 calc(50% - 0.5rem);
-      min-width: 0;
-    }
-
-    .video-wrap {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      background: var(--surface);
-    }
-
-    .video-wrap iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .carousel-btn {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, opacity 0.2s;
-    }
-
-    .carousel-btn:hover:not(:disabled) {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .carousel-btn:disabled {
-      opacity: 0.3;
-      cursor: default;
-    }
-
-    .carousel-btn svg {
-      width: 16px;
-      height: 16px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    @media (max-width: 580px) {
-      .video-slide { flex: 0 0 100%; }
-    }
+    .video-carousel { position: relative; display: flex; align-items: center; gap: 0.6rem; }
+    .video-track-wrap { flex: 1; overflow: hidden; }
+    .video-track { display: flex; gap: 1rem; transition: transform 0.4s ease; }
+    .video-slide { flex: 0 0 calc(50% - 0.5rem); min-width: 0; }
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: var(--surface); }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .carousel-btn { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s, color 0.2s, opacity 0.2s; }
+    .carousel-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+    .carousel-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @media (max-width: 580px) { .video-slide { flex: 0 0 100%; } }
 
     /* BIO */
-    #bio p:not(.section-title):not(.bio-subtitle) {
-      margin-bottom: 0.95rem;
-      font-size: 1.05rem;
-    }
-
+    #bio p:not(.section-title):not(.bio-subtitle) { margin-bottom: 0.95rem; font-size: 1.05rem; }
     #bio p:last-child { margin-bottom: 0; }
-
-    #bio a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--accent);
-      transition: color 0.2s, border-bottom-color 0.2s;
-    }
-
-    #bio a:hover {
-      color: var(--white);
-      border-bottom-color: var(--white);
-    }
+    #bio a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); transition: color 0.2s, border-bottom-color 0.2s; }
+    #bio a:hover { color: var(--white); border-bottom-color: var(--white); }
 
     /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-      text-align: center;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-    }
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.68rem; letter-spacing: 0.12em; color: var(--muted); }
 
     /* RESPONSIVE */
-    @media (max-width: 580px) {
-      .form-row { grid-template-columns: 1fr; }
-      .datetime-row { grid-template-columns: 1fr; }
-      nav { gap: 1.2rem; }
-    }
+    @media (max-width: 580px) { .form-row { grid-template-columns: 1fr; } .datetime-row { grid-template-columns: 1fr; } nav { gap: 1.2rem; } }
   </style>
 </head>
 <body>
@@ -608,22 +473,18 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="first-name"><span id="lbl-first-name">First Name</span> <span class="req">*</span></label>
             <input type="text" id="first-name" name="first-name" required />
           </div>
           <div class="form-group">
-            <label for="last-name" id="lbl-last-name">Last Name</label>
             <input type="text" id="last-name" name="last-name" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="email"><span id="lbl-email">Email</span> <span class="req">*</span></label>
             <input type="email" id="email" name="email" required />
           </div>
           <div class="form-group">
-            <label for="phone" id="lbl-phone">Phone</label>
             <input type="tel" id="phone" name="phone" />
           </div>
         </div>
@@ -631,21 +492,30 @@
         <div class="datetime-row">
           <div class="form-group">
             <label><span id="lbl-event-date">Event Date</span> <span class="req">*</span></label>
-            <div id="date-en-wrapper">
-              <input type="date" id="event-date-en" name="event-date-en" required />
+            <div id="date-en-wrapper" class="date-picker-wrapper">
+              <input type="text" id="event-date-en" name="event-date-en" placeholder="MM/DD/YYYY" readonly autocomplete="off" required />
+              <div class="date-picker-panel" id="panel-en"></div>
             </div>
-            <div id="date-tr-wrapper" style="display:none;">
-              <input type="text" id="event-date-tr" name="event-date-tr" placeholder="GG/AA/YYYY" maxlength="10" />
+            <div id="date-tr-wrapper" class="date-picker-wrapper" style="display:none;">
+              <input type="text" id="event-date-tr" name="event-date-tr" placeholder="GG/AA/YYYY" readonly autocomplete="off" />
+              <div class="date-picker-panel" id="panel-tr"></div>
             </div>
           </div>
+          
           <div class="form-group">
-            <label><span id="lbl-start-time">Start Time</span> <span class="req">*</span></label>
+            <label style="visibility:hidden;">&nbsp;</label>
 
-            <!-- EN: hour + minute dropdowns + AM/PM toggle -->
+            <!-- EN: Custom Time Picker + AM/PM toggle -->
             <div id="time-en-wrapper" class="ampm-container">
-              <div class="time-selector">
-                <select id="en-hour" name="en-hour" required><option value="" disabled selected>Hr</option></select>
-                <select id="en-minute" name="en-minute" required><option value="" disabled selected>Min</option></select>
+              <div class="date-picker-wrapper">
+                <input type="text" id="event-time-en" placeholder="Start Time *" readonly autocomplete="off" required />
+                <div class="time-picker-panel" id="tpanel-en">
+                  <div class="tp-header"><span>Hr</span><span>Min</span></div>
+                  <div class="tp-lists">
+                    <div class="tp-list" id="tlist-hr-en"></div>
+                    <div class="tp-list" id="tlist-min-en"></div>
+                  </div>
+                </div>
               </div>
               <div class="ampm-toggle-group">
                 <button type="button" class="ampm-btn" id="btn-am">AM</button>
@@ -653,14 +523,18 @@
               </div>
             </div>
 
-            <!-- TR: hour + minute dropdowns -->
-            <div id="time-tr-wrapper" class="tr-time-container">
-              <select id="tr-hour" name="tr-hour">
-                <option value="" disabled selected>Saat</option>
-              </select>
-              <select id="tr-minute" name="tr-minute">
-                <option value="" disabled selected>Dakika</option>
-              </select>
+            <!-- TR: Custom Time Picker -->
+            <div id="time-tr-wrapper" class="tr-time-container" style="display:none;">
+              <div class="date-picker-wrapper">
+                <input type="text" id="event-time-tr" placeholder="Başlangıç Saati *" readonly autocomplete="off" />
+                <div class="time-picker-panel" id="tpanel-tr">
+                  <div class="tp-header"><span>Saat</span><span>Dakika</span></div>
+                  <div class="tp-lists">
+                    <div class="tp-list" id="tlist-hr-tr"></div>
+                    <div class="tp-list" id="tlist-min-tr"></div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <input type="hidden" name="event-date" id="hidden-event-date" />
@@ -669,12 +543,10 @@
         </div>
 
         <div class="form-group">
-          <label for="event-address"><span id="lbl-event-address">Event Address</span> <span class="req">*</span></label>
           <input type="text" id="event-address" name="event-address" required />
         </div>
 
         <div class="form-group">
-          <label for="event-type"><span id="lbl-event-type">Event Type</span> <span class="req">*</span></label>
           <select id="event-type" name="event-type" required></select>
         </div>
 
@@ -698,7 +570,6 @@
         </div>
 
         <div class="form-group" style="margin-top:1rem;">
-          <label for="message" id="message-label">You may include details about your event such as the approximate duration, number of guests, and any other relevant information.</label>
           <textarea id="message" name="message"></textarea>
         </div>
 
@@ -749,123 +620,212 @@
   <footer>© <span id="year"></span> Sezer Yılmaz</footer>
 
   <script>
-    // ── TRANSLATIONS ──────────────────────────────────────────────
-    const translations = {
+    // ── TRANSLATIONS LOADER ──────────────────────────────────────
+    let translations = {};
+
+    async function loadTranslations() {
+      try {
+        const [enRes, trRes] = await Promise.all([
+          fetch('/content/en.json'),
+          fetch('/content/tr.json')
+        ]);
+        translations.en = await enRes.json();
+        translations.tr = await trRes.json();
+      } catch (err) {
+        console.error("Metin yükleme hatası:", err);
+      }
+    }
+
+    // ── CUSTOM TIME PICKERS ───────────────────────────────────────
+    function createTimePicker(inputId, panelId, hrListId, minListId, is24Hour) {
+      const inputEl = document.getElementById(inputId);
+      const panelEl = document.getElementById(panelId);
+      const hrList = document.getElementById(hrListId);
+      const minList = document.getElementById(minListId);
+
+      let selHr = null;
+      let selMin = null;
+
+      const hrMax = is24Hour ? 23 : 12;
+      const hrStart = is24Hour ? 0 : 1;
+      
+      for (let h = hrStart; h <= hrMax; h++) {
+        const val = String(h).padStart(2, '0');
+        const div = document.createElement('div');
+        div.className = 'tp-item';
+        div.textContent = val;
+        div.dataset.val = val;
+        div.addEventListener('click', (e) => {
+          e.stopPropagation();
+          hrList.querySelectorAll('.tp-item').forEach(el => el.classList.remove('active'));
+          div.classList.add('active');
+          selHr = val;
+          updateInput();
+        });
+        hrList.appendChild(div);
+      }
+
+      for (let m = 0; m <= 55; m += 5) {
+        const val = String(m).padStart(2, '0');
+        const div = document.createElement('div');
+        div.className = 'tp-item';
+        div.textContent = val;
+        div.dataset.val = val;
+        div.addEventListener('click', (e) => {
+          e.stopPropagation();
+          minList.querySelectorAll('.tp-item').forEach(el => el.classList.remove('active'));
+          div.classList.add('active');
+          selMin = val;
+          updateInput();
+          if (selHr && selMin) closePanel();
+        });
+        minList.appendChild(div);
+      }
+
+      function updateInput() {
+        if (selHr && selMin) {
+          inputEl.value = `${selHr}:${selMin}`;
+          inputEl.setCustomValidity('');
+        } else if (selHr) {
+          inputEl.value = `${selHr}:--`;
+          inputEl.setCustomValidity('Incomplete');
+        } else if (selMin) {
+          inputEl.value = `--:${selMin}`;
+          inputEl.setCustomValidity('Incomplete');
+        }
+      }
+
+      function openPanel() {
+        document.querySelectorAll('.date-picker-panel.open, .time-picker-panel.open').forEach(p => p.classList.remove('open'));
+        panelEl.classList.add('open');
+      }
+      
+      function closePanel() {
+        panelEl.classList.remove('open');
+      }
+
+      inputEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panelEl.classList.contains('open') ? closePanel() : openPanel();
+      });
+
+      panelEl.addEventListener('click', (e) => e.stopPropagation());
+
+      document.addEventListener('click', (e) => {
+        if (!panelEl.contains(e.target) && e.target !== inputEl) closePanel();
+      });
+    }
+
+    createTimePicker('event-time-en', 'tpanel-en', 'tlist-hr-en', 'tlist-min-en', false);
+    createTimePicker('event-time-tr', 'tpanel-tr', 'tlist-hr-tr', 'tlist-min-tr', true);
+
+    // ── CALENDAR DATE PICKER ────────────────────────────────────
+    function pad2(n) { return String(n).padStart(2, '0'); }
+
+    const dpLocales = {
       en: {
-        navBooking: "Booking", navVideos: "Videos", navBio: "Biography",
-        titleBooking: "Booking",
-        descBooking: "Please complete this short form to book your experience.",
-        lblFirstName: "First Name", lblLastName: "Last Name",
-        lblEmail: "Email", lblPhone: "Phone",
-        lblEventDate: "Event Date", lblStartTime: "Start Time",
-        lblEventAddress: "Event Address", lblEventType: "Event Type",
-        lblPreferredSetup: "Preferred Setup",
-        lblMessage: "You may include details about your event such as the approximate duration, number of guests, and any other relevant information.",
-        lblOtherPlaceholder: "Please specify...",
-        btnSubmit: "Submit",
-        successTitle: "Thank You", successDesc: "Your submission has been received.",
-        titleVideos: "Videos", titleBio: "Biography",
-        subtitleBio: "instrumentalist · qanun player",
-        chkSolo: "Solo Qanun", chkDj: "Qanun & DJ Set",
-        eventOptions: [
-          { val: "", text: "", disabled: true },
-          { val: "Musical Meditation Session", text: "Musical Meditation Session" },
-          { val: "Concert/Recital", text: "Concert / Recital" },
-          { val: "Engagement Ceremony", text: "Engagement Ceremony" },
-          { val: "Wedding", text: "Wedding" },
-          { val: "Brunch, Lunch or Dinner", text: "Brunch, Lunch or Dinner" },
-          { val: "Corporate Event/Conference/Opening", text: "Corporate Event / Conference / Opening" },
-          { val: "Other", text: "Other" }
-        ],
-        bio: [
-          `On the morning of Sunday, January 19, 1986, Sezer Yılmaz was born in a "state hospital," entirely oblivious to the meaning of words like "hospital" (and especially "state.") It would be years before he would fully grasp that this hospital was located in a country called Türkiye.`,
-          `He began his musical journey with the bağlama (another instrument probably of West Asia origin) at the age of ten. For a time, he explored instruments like percussion and the oud, but from 2000 onward, he devoted himself entirely to the qanun.`,
-          `In 2000, he was admitted to the Antalya Anatolian Fine Arts High School, where he studied for one year. In September 2001, he took the entrance exams for the Istanbul Technical University Turkish Music State Conservatory High School Unit (by that time, he had started to grasp what 'state' truly meant) and succeeded, marking the beginning of a significant chapter in his musical education. That same year, he had the privilege of meeting Göksel Baktagir, a master of the qanun and a composer whose contributions to Turkish music would leave an indelible mark on both the art form and Sezer's journey. During this period, he honed his craft under the guidance of Erol Deran for qanun performance and deepened his understanding of repertoire through lessons with the renowned songwriter Erol Sayan.`,
-          `At just sixteen, he performed his first concert alongside his violinist friend, Haluk Yılmaz. Shortly after, he had the honour of appearing as a guest artist at several of his teacher Göksel Baktagir's concerts, collaborating on memorable pieces with the master himself. He performed the qanun in numerous cities across Türkiye, as well as in Portugal, Denmark, Japan, Canada, Spain, the Netherlands, Italy, Switzerland, France, Germany, Jordan, the United Arab Emirates, and Australia as part of Arkın Ilıcalı's 'Mercan Dede' project.`,
-          `In 2017, he released an album titled 'Detail', featuring Orçun Çanaklı's arrangements. The album brought together an exceptional line-up of musicians, including Volkan Öktem (drums), Alp Ersönmez (bass), Serhan Yasdıman (guitar), Yurdal Tokcan (oud), Şakir Ozan Uygan (percussion), and Haktan, whose unique vocals added to the mix.`,
-          `He imagines concluding his time by making edits to this text, occasionally wondering, "Did I go on for too long?", assuming he doesn't face a significant health crisis in the future. As of the date this text was "completed", he has no grave, and with the timing of his final heartbeat still shrouded in uncertainty, his necrology remains unwritten, awaiting the inevitable.`,
-          `He loves philosophy, literature, science and delectable food.`
-        ]
+        months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        weekdays: ["Mo","Tu","We","Th","Fr","Sa","Su"],
+        weekStart: 1,
+        format: (d) => `${pad2(d.getMonth() + 1)}/${pad2(d.getDate())}/${d.getFullYear()}`
       },
       tr: {
-        navBooking: "Rezervasyon", navVideos: "VİDEOLAR", navBio: "BİYOGRAFİ",
-        titleBooking: "Rezervasyon",
-        descBooking: "Deneyiminizi ayırtmak için lütfen bu kısa formu doldurun.",
-        lblFirstName: "Ad", lblLastName: "Soyad",
-        lblEmail: "E-posta", lblPhone: "Telefon",
-        lblEventDate: "Etkinlik Tarihi", lblStartTime: "Başlangıç Saati",
-        lblEventAddress: "Etkinlik Adresi", lblEventType: "Etkinlik Türü",
-        lblPreferredSetup: "Tercih Edilen Kurulum",
-        lblMessage: "Etkinliğinizle ilgili yaklaşık süre, konuk sayısı ve diğer ilgili bilgileri ekleyebilirsiniz.",
-        lblOtherPlaceholder: "Lütfen belirtin...",
-        btnSubmit: "Gönder",
-        successTitle: "Teşekkürler", successDesc: "Başvurunuz başarıyla alındı.",
-        titleVideos: "VİDEOLAR", titleBio: "BİYOGRAFİ",
-        subtitleBio: "Enstrümanist · YouTuber · Vodcaster",
-        chkSolo: "Solo Kanun", chkDj: "Kanun & DJ Set",
-        eventOptions: [
-          { val: "", text: "", disabled: true },
-          { val: "Musical Meditation Session", text: "Müzikal Meditasyon Seansı" },
-          { val: "Concert/Recital", text: "Konser / Resital" },
-          { val: "Engagement Ceremony", text: "Nişan Töreni" },
-          { val: "Wedding", text: "Düğün" },
-          { val: "Brunch, Lunch or Dinner", text: "Brunch, Öğle veya Akşam Yemeği" },
-          { val: "Corporate Event/Conference/Opening", text: "Kurumsal Etkinlik / Konferans / Açılış" },
-          { val: "Other", text: "Diğer" }
-        ],
-        bio: [
-          `19 Ocak'ın Pazar gününe denk geldiği –belki de hiç doğmamış olan olan İsa'dan sonra– 1986 yılında, devlet henüz kendisine varlığını hissettirmemişken, kime veya neye ait olduğunu bilmediği, 'hastane' denen bir binânın birinci katındaki güney cepheli bir odada dünyaya geldiği tanıklar tarafından onaylı olan Sezer Yılmaz'ın, bu hastanenin bulunduğu şehrin Burdur olduğunu öğrenmesi birkaç yıl sürdü. 'Dünya' isimli gezegenin ülkelere ayrılmış olduğunu öğrenip bunu gereksiz bulduğunda daha muntazam Türkçe konuşmakta, elleriyle bazı aletleri kullanabilmekte ve elbette 'litosfer'de iki ayak üzerinde rahatça hareket edebilmekteydi.`,
-          `Doğum anının, –dakikasına kadar bilinmiyor olsa da– 12:30-12:54 arası olduğu kesine yakındır. (Tam dakika ve mümkünse saniye halen aranmaktadır.)`,
-          `Doğumunun ertesi günü Abant Gölü ve Aras Nehri'nin donması Ocak ayının sert mizacının insanlar tarafından kanıksanmış olması sayesinde olağan karşılandı ve kendisi meşum bir çocuk ilan edilmedi.`,
-          `Anne ve babasının iş hayatından mütevellit hayatının ilk üç yılında en sık gördüğü iki insan anneannesi ve dedesiydi. Sonraki üç yılının büyük kısmını da okul öncesi eğitimle geçirdikten sonra 14 Eylül 1992'de okul hayatı başlatıldı.`,
-          `Yaklaşık on yaşındayken, bağlamayla müziğe başladı. (Bu sahih bir rivayet olarak gösterilse de, daha öncesinde ıslıkla, dönemin popüler eserlerini yorumlama girişimleri olmuştur. Ayrıca şu an kim olduğunu hatırlamadığı bir amcanın kendisine mızıka hediye ettiğini dahi anımsamaktadır ve evet, mızıka kariyeri çok kısa sürmüştür.)`,
-          `Sonraki bir buçuk yıl, kendisi için futbol ile müzik arasındaki seçiminin kesinleşme süreci oldu. Kullanımdaki bedeninin, dünyadaki on ikinci yılı dolmadan kararını verdi ve biletlerin, maçın yapıldığı 'beton sahadaki eksikliklerin giderilmesi' için satıldığı maçla jübilesini yaptı.`,
-          `'Birinci sınıf'tan sonra, gittikçe kalitenin düşmesinden midir bilinmez, dördüncü sınıfın sonundan îtibâren ders çalışmaya ayırdığı süre azalınca notlarında kısmî bir inhitat görüldü. Lakin izan yeteneğinde aynı gerileme görülmediği için kitap okumaya ve müzik dinlemeye ayırdığı süreyi artırdı ve ilk ve orta tedris hayatı boyunca pek çok etkinlikte ud ve bağlamayla yer aldı.`,
-          `İptidai talebeliği yılları 1997 yazında son buldu. O zamanlar "İlköğretim'in ikinci kademesi" denilen kısmını ise 2000 yılında tamamladı. Aynı yıl, Antalya Anadolu Güzel Sanatlar Lisesi'ni kazandı. Bu okulda 2001 yılının Haziran ayına kadar İngilizce hazırlık okuduğu iddia edilse de, korteksinin incelemesi neticesinde bunu kanıtlayacak hiçbir şey bulunamamasına mukâbil, kânunla alâkalı datanın yoğunluğu göze çarptı. (Bu sebepten olsa gerek, 'kendisini pek âmâde hissetmediği için, bu okula devam etmemeyi tercih etmedi' diye yazılırsa doğru olmaz.)`,
-          `2001 yılının Eylül ayında, İstanbul Teknik Üniversitesi Türk Müziği Devlet Konservatuarı Lise Birimi'nin sınavlarında girdi ve ardından muvaffak olduğu açıklandı… Aynı sene, Türk Müziği'ne büyük katkıları olan kânun üstâdı ve bestekâr Göksel Baktagir'le tanıştı. Maahazâ, İ.T.Ü'de Prof. Erol Deran'dan kânun, Erol Sayan'dan repertuar dersi aldı.`,
-          `2002'nin Eylül ayında, kemânî arkadaşı Haluk Yılmaz ve diğer konuk sanatkâr arkadaşlarıyla birlikte konser verdi… İ.T.Ü Türk Müziği Devlet Konservatuarı'nda düzenlenen pek çok faaliyette yer aldı.`,
-          `'İstanbul Sâzendeleri' isimli grubun bâzı konserlerinde 'mihman sâzende' olarak sahnede bulundu ve 3 Nisan 2004'te aynı grubun kurucusu olan Göksel Baktagir'le aynı sahnede, onun 'Atlantis' isimli eserini yorumlama şansını yakaladı. (Bu vakadan birkaç ay önce hallak ile olan düzenli ilişikisini -6 Aralık 2015'e kadar- kestiği bilgisi kesinlikle doğru olsa da, bunu burada yazmanın anlam yükü pek hafiftir. Hele hele son ilişkinin 10 Şubat 2004'te kurulduğunu son derece net olarak belirtmek, klavyedeki tuşlara basmadan bu yazıyı yazmaya çalışmak kadar beyhûde bir davranıştır.)`,
-          `Arkın Ilıcalı'nın 'Mercan Dede' isimli projesi kapsamında yurt içindeki pek çok şehirde, Antarktika ve Afrika dışındaki kıtaların pek çok ülkesinde (Portekiz, Danimarka, Japonya, Kanada, İspanya, Hollanda, İtalya, İsviçre, Fransa, Almanya, Ürdün, Birleşik Arap Emirlikleri ve Avustralya) kanun çaldı. (Bu Sezer Yılmaz'ın Afrika'ya ayak basmadığı anlamına gelmemektedir; başka bir vesîleyle “elbette Afrika dâhil” edilmiştir.)`,
-          `Boeing pilotu olan kardeşi Ozan'ı, atmosfer dışına çıkabileceği bir araca terfi ettirebilmek umuduyla NASA'ya başvurmaya yönlendirmeye çalışmış fakat şu âna kadar başarılı olamamıştır. Bu yüzden ömrünü Samanyolu'nun Orion Kolu'ndan dışarı çıkamadan geçirecek olması 'neredeyse kesin'dir (zîrâ henüz stratosfere vasıl olduğu vâkî değildir). Buna rağmen aksi bir durum gerçekleşir de daha uzaklara gidecek olursa <a href="https://x.com/sezeryilmaz" target="_blank">x.com/sezeryilmaz</a> adresinden muhakkak insanlığa bildireceğinin sözünü –işte burada– yazılı olarak vermiştir. Deniz seviyesinden en fazla birkaç bin metre uzaklaşabileceği saniyeler (belki de yıllar) boyunca –büyük bir sıhhi bun yaşamazsa bu metinde değişiklikler yaparak ve arada bir “Yoksa çok mu uzattım?” diye düşünerek misâfirliğini nihayetlendirmeyi tasavvur etmektedir.`,
-          `'Detay' isimli albümü 2017'de yayınlanmıştır.`,
-          `İkinci YouTube kanalı olan <a href="https://youtube.com/@amatorflanor" target="_blank">Amatör Flanör</a>'de tek başına veya bir başkasıyla bazı konular üzerine konuşmaya devam etmektedir.`,
-          `Bu metnin "tamamlandığı" tarih itibarı ile bir makberi olmadığı gibi henüz kalbinin durmasına sebep olacak hadise dahi gayrimuayyen olduğu için nekrolojisi yazılmayı beklemektedir.`
-        ]
+        months: ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],
+        weekdays: ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"],
+        weekStart: 1,
+        format: (d) => `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}/${d.getFullYear()}`
       }
     };
 
-    // ── POPULATE TIME DROPDOWNS ────────────────────────────────
-    const enHour = document.getElementById('en-hour');
-    const enMinute = document.getElementById('en-minute');
-    const trHour = document.getElementById('tr-hour');
-    const trMinute = document.getElementById('tr-minute');
+    function createDatePicker(inputEl, panelEl, localeKey) {
+      const locale = dpLocales[localeKey];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let viewYear = today.getFullYear();
+      let viewMonth = today.getMonth();
+      let selectedDate = null;
 
-    for (let h = 1; h <= 12; h++) {
-      const opt = document.createElement('option');
-      opt.value = String(h).padStart(2, '0');
-      opt.textContent = String(h).padStart(2, '0');
-      enHour.appendChild(opt);
-    }
-    for (let h = 0; h <= 23; h++) {
-      const opt = document.createElement('option');
-      opt.value = String(h).padStart(2, '0');
-      opt.textContent = String(h).padStart(2, '0');
-      trHour.appendChild(opt);
-    }
-    for (let m = 0; m <= 55; m += 5) {
-      const optEn = document.createElement('option');
-      optEn.value = String(m).padStart(2, '0');
-      optEn.textContent = String(m).padStart(2, '0');
-      enMinute.appendChild(optEn);
+      function render() {
+        const firstOfMonth = new Date(viewYear, viewMonth, 1);
+        let startOffset = firstOfMonth.getDay() - locale.weekStart;
+        if (startOffset < 0) startOffset += 7;
+        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
 
-      const optTr = document.createElement('option');
-      optTr.value = String(m).padStart(2, '0');
-      optTr.textContent = String(m).padStart(2, '0');
-      trMinute.appendChild(optTr);
+        let html = `
+          <div class="dp-header">
+            <button type="button" class="dp-nav" data-dir="-1">&#8249;</button>
+            <span class="dp-title">${locale.months[viewMonth]} ${viewYear}</span>
+            <button type="button" class="dp-nav" data-dir="1">&#8250;</button>
+          </div>
+          <div class="dp-weekdays">${locale.weekdays.map(d => `<span>\${d}</span>`).join('')}</div>
+          <div class="dp-grid">`;
+
+        for (let i = 0; i < startOffset; i++) html += `<span class="dp-day empty"></span>`;
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const cellDate = new Date(viewYear, viewMonth, day);
+          const classes = ['dp-day'];
+          if (cellDate < today) classes.push('disabled');
+          if (cellDate.getTime() === today.getTime()) classes.push('today');
+          if (selectedDate && cellDate.getTime() === selectedDate.getTime()) classes.push('selected');
+          html += `<span class="${classes.join(' ')}" data-day="${day}">${day}</span>`;
+        }
+
+        html += `</div>`;
+        panelEl.innerHTML = html;
+
+        panelEl.querySelectorAll('.dp-nav').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            viewMonth += parseInt(btn.dataset.dir, 10);
+            if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+            if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+            render();
+          });
+        });
+
+        panelEl.querySelectorAll('.dp-day:not(.empty):not(.disabled)').forEach(cell => {
+          cell.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const day = parseInt(cell.dataset.day, 10);
+            selectedDate = new Date(viewYear, viewMonth, day);
+            inputEl.value = locale.format(selectedDate);
+            closePanel();
+          });
+        });
+      }
+
+      function openPanel() {
+        document.querySelectorAll('.date-picker-panel.open, .time-picker-panel.open').forEach(p => p.classList.remove('open'));
+        if (selectedDate) { viewYear = selectedDate.getFullYear(); viewMonth = selectedDate.getMonth(); }
+        render();
+        panelEl.classList.add('open');
+      }
+
+      function closePanel() {
+        panelEl.classList.remove('open');
+      }
+
+      inputEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panelEl.classList.contains('open') ? closePanel() : openPanel();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!panelEl.contains(e.target) && e.target !== inputEl) closePanel();
+      });
     }
+
+    createDatePicker(document.getElementById('event-date-en'), document.getElementById('panel-en'), 'en');
+    createDatePicker(document.getElementById('event-date-tr'), document.getElementById('panel-tr'), 'tr');
 
     // ── LANGUAGE & UI SWITCHER ─────────────────────────────────────
     let currentLang = 'en';
+
+    function setPlaceholder(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.placeholder = el.required ? text + ' *' : text;
+    }
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -875,22 +835,25 @@
       document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
 
       const t = translations[lang];
+      if (!t) return;
 
       document.getElementById('nav-booking').textContent    = t.navBooking;
       document.getElementById('nav-videos').textContent     = t.navVideos;
       document.getElementById('nav-bio').textContent        = t.navBio;
       document.getElementById('title-booking').textContent  = t.titleBooking;
       document.getElementById('desc-booking').textContent   = t.descBooking;
-      document.getElementById('lbl-first-name').textContent = t.lblFirstName;
-      document.getElementById('lbl-last-name').textContent  = t.lblLastName;
-      document.getElementById('lbl-email').textContent      = t.lblEmail;
-      document.getElementById('lbl-phone').textContent      = t.lblPhone;
+      setPlaceholder('first-name', t.lblFirstName);
+      setPlaceholder('last-name', t.lblLastName);
+      setPlaceholder('email', t.lblEmail);
+      setPlaceholder('phone', t.lblPhone);
       document.getElementById('lbl-event-date').textContent = t.lblEventDate;
-      document.getElementById('lbl-start-time').textContent = t.lblStartTime;
-      document.getElementById('lbl-event-address').textContent = t.lblEventAddress;
-      document.getElementById('lbl-event-type').textContent = t.lblEventType;
+      
+      setPlaceholder('event-time-en', t.lblStartTime);
+      setPlaceholder('event-time-tr', t.lblStartTime);
+      
+      setPlaceholder('event-address', t.lblEventAddress);
       document.getElementById('lbl-preferred-setup').textContent = t.lblPreferredSetup;
-      document.getElementById('message-label').textContent  = t.lblMessage;
+      document.getElementById('message').placeholder = t.lblMessage;
       document.getElementById('other-event-type').placeholder = t.lblOtherPlaceholder;
       document.getElementById('btn-submit').textContent     = t.btnSubmit;
       document.getElementById('txt-success-title').textContent = t.successTitle;
@@ -904,22 +867,26 @@
       const sel = document.getElementById('event-type');
       const prevVal = sel.value;
       sel.innerHTML = '';
-      t.eventOptions.forEach(o => {
-        const opt = document.createElement('option');
-        opt.value = o.val;
-        opt.textContent = o.text;
-        if (o.disabled) { opt.disabled = true; opt.selected = true; }
-        if (o.val === prevVal) { opt.selected = true; }
-        sel.appendChild(opt);
-      });
+      if (t.eventOptions) {
+        t.eventOptions.forEach((o, i) => {
+          const opt = document.createElement('option');
+          opt.value = o.val;
+          opt.textContent = o.text;
+          if (i === 0) { opt.disabled = true; opt.selected = true; }
+          if (o.val === prevVal) { opt.selected = true; }
+          sel.appendChild(opt);
+        });
+      }
 
       const bioContainer = document.getElementById('bio-content');
       bioContainer.innerHTML = '';
-      t.bio.forEach(text => {
-        const p = document.createElement('p');
-        p.innerHTML = text;
-        bioContainer.appendChild(p);
-      });
+      if (t.bio) {
+        t.bio.forEach(text => {
+          const p = document.createElement('p');
+          p.innerHTML = text;
+          bioContainer.appendChild(p);
+        });
+      }
 
       const dateEnWrapper  = document.getElementById('date-en-wrapper');
       const dateTrWrapper  = document.getElementById('date-tr-wrapper');
@@ -927,6 +894,8 @@
       const timeTrWrapper  = document.getElementById('time-tr-wrapper');
       const eventDateEn    = document.getElementById('event-date-en');
       const eventDateTr    = document.getElementById('event-date-tr');
+      const eventTimeEn    = document.getElementById('event-time-en');
+      const eventTimeTr    = document.getElementById('event-time-tr');
 
       if (lang === 'tr') {
         dateEnWrapper.style.display = 'none';
@@ -936,10 +905,8 @@
         
         timeEnWrapper.style.display = 'none';
         timeTrWrapper.style.display = 'flex';
-        enHour.removeAttribute('required');
-        enMinute.removeAttribute('required');
-        trHour.setAttribute('required', 'true');
-        trMinute.setAttribute('required', 'true');
+        eventTimeEn.removeAttribute('required');
+        eventTimeTr.setAttribute('required', 'true');
       } else {
         dateEnWrapper.style.display = 'block';
         dateTrWrapper.style.display = 'none';
@@ -948,10 +915,8 @@
         
         timeEnWrapper.style.display = 'flex';
         timeTrWrapper.style.display = 'none';
-        trHour.removeAttribute('required');
-        trMinute.removeAttribute('required');
-        enHour.setAttribute('required', 'true');
-        enMinute.setAttribute('required', 'true');
+        eventTimeTr.removeAttribute('required');
+        eventTimeEn.setAttribute('required', 'true');
       }
     }
 
@@ -995,9 +960,14 @@
         otherInput.value = '';
       }
 
-      // Her durumda kurulum seçeneklerini göster (veya gizle)
       const sec = document.getElementById('secondary-options');
-      sec.classList.add('visible');
+      if (this.value === 'Musical Meditation Session') {
+        sec.classList.remove('visible');
+        document.getElementById('chk-solo').checked = false;
+        document.getElementById('chk-dj').checked = false;
+      } else {
+        sec.classList.add('visible');
+      }
     });
 
     // Form submit
@@ -1010,25 +980,24 @@
       const hiddenDate = document.getElementById('hidden-event-date');
       const hiddenTime = document.getElementById('hidden-event-time');
 
+      let timeVal = currentLang === 'tr' ? document.getElementById('event-time-tr').value : document.getElementById('event-time-en').value;
+      
+      if (!timeVal || timeVal.includes('--')) {
+        alert(currentLang === 'tr' ? 'Lütfen tam bir saat ve dakika seçin.' : 'Please select a complete hour and minute.');
+        return;
+      }
+
       if (currentLang === 'tr') {
         hiddenDate.value = document.getElementById('event-date-tr').value;
-        const h = document.getElementById('tr-hour').value;
-        const m = document.getElementById('tr-minute').value;
-        hiddenTime.value = (h && m) ? `${h}:${m}` : '';
+        hiddenTime.value = timeVal;
       } else {
         hiddenDate.value = document.getElementById('event-date-en').value;
-        const h = document.getElementById('en-hour').value;
-        const m = document.getElementById('en-minute').value;
-        hiddenTime.value = (h && m) ? `${h}:${m} ${currentPeriod}` : '';
+        hiddenTime.value = `${timeVal} ${currentPeriod}`;
       }
 
       const data = new FormData(form);
       data.delete('event-date-en');
       data.delete('event-date-tr');
-      data.delete('en-hour');
-      data.delete('en-minute');
-      data.delete('tr-hour');
-      data.delete('tr-minute');
 
       try {
         await fetch('/', {
@@ -1064,8 +1033,26 @@
     nextBtn.addEventListener('click', () => { index = Math.min(totalSlides - (window.innerWidth <= 580 ? 1 : 2), index + (window.innerWidth <= 580 ? 1 : 2)); updateCarousel(); });
 
     window.addEventListener('resize', updateCarousel);
-    updateCarousel();
-    detectLocationLanguage();
+    
+    // Init
+    (async function init() {
+      await loadTranslations();
+      updateCarousel();
+      detectLocationLanguage();
+    })();
+  </script>
+
+  <!-- Netlify Identity Oturum Yönlendirme Scripti -->
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
   </script>
 
 </body>
