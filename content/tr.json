@@ -1,37 +1,41 @@
 {
-  "navBooking": "Rezervasyon",
-  "navVideos": "VİDEOLAR",
-  "navBio": "BİYOGRAFİ",
   "titleBooking": "Rezervasyon",
-  "descBooking": "Deneyiminizi ayırtmak için lütfen bu kısa formu doldurun.",
-  "lblFirstName": "Ad",
-  "lblLastName": "Soyad",
-  "lblEmail": "E-posta",
-  "lblPhone": "Telefon",
-  "lblEventDate": "Etkinlik Tarihi",
-  "lblStartTime": "Başlangıç Saati",
-  "lblEventAddress": "Etkinlik Adresi",
-  "lblPreferredSetup": "Tercih Edilen Kurulum",
-  "lblMessage": "Etkinliğinizle ilgili yaklaşık süre, konuk sayısı ve diğer ilgili bilgileri buraya ekleyebilirsiniz.",
-  "lblOtherPlaceholder": "Lütfen belirtin...",
-  "btnSubmit": "Gönder",
-  "successTitle": "Teşekkürler",
-  "successDesc": "Başvurunuz başarıyla alındı.",
-  "titleVideos": "VİDEOLAR",
-  "titleBio": "BİYOGRAFİ",
-  "subtitleBio": "Enstrümanist · YouTuber · Vodcaster",
-  "chkSolo": "Solo Kanun",
-  "chkDj": "Kanun & DJ Set",
   "eventOptions": [
-    { "val": "", "text": "Etkinlik Türü *" },
-    { "val": "Musical Meditation Session", "text": "Müzikal Meditasyon Seansı" },
-    { "val": "Concert/Recital", "text": "Konser / Resital" },
-    { "val": "Engagement / Wedding", "text": "Nişan/Düğün" },
-    { "val": "Birthday Party / Anniversary", "text": "Doğum Günü / Yıl Dönümü" },
-    { "val": "Brunch, Lunch or Dinner", "text": "Brunch, Öğle veya Akşam Yemeği" },
-    { "val": "Corporate Event/Conference/Opening", "text": "Kurumsal Etkinlik / Konferans / Açılış" },
-    { "val": "Other", "text": "Diğer" }
+    {
+      "val": "Musical Meditation Session",
+      "text": "Müzikal Meditasyon Seansı"
+    },
+    {
+      "val": "Concert/Recital",
+      "text": "Konser / Resital"
+    },
+    {
+      "val": "Engagement / Wedding",
+      "text": "Nişan/Düğün"
+    },
+    {
+      "val": "Birthday Party / Anniversary",
+      "text": "Doğum Günü / Yıl Dönümü"
+    },
+    {
+      "val": "Brunch, Lunch or Dinner",
+      "text": "Brunch, Öğle veya Akşam Yemeği"
+    },
+    {
+      "val": "Corporate Event/Conference/Opening",
+      "text": "Kurumsal Etkinlik / Konferans / Açılış"
+    },
+    {
+      "val": "Other",
+      "text": "Diğer"
+    }
   ],
+  "lblFirstName": "Ad",
+  "navBio": "BİYOGRAFİ",
+  "chkSolo": "Solo Kanun",
+  "headerImgRight": "/images/sy002.png",
+  "lblEmail": "E-posta",
+  "descBooking": "Deneyiminizi ayırtmak için lütfen bu kısa formu doldurun.",
   "bio": [
     "19 Ocak'ın Pazar gününe denk geldiği –belki de hiç doğmamış olan olan İsa'dan sonra– 1986 yılında, devlet henüz kendisine varlığını hissettirmemişken, kime veya neye ait olduğunu bilmediği, 'hastane' denen bir binanın birinci katındaki güney cepheli bir odada dünyaya geldiği tanıklar tarafından onaylı olan Sezer Yılmaz'ın, bu hastanenin bulunduğu şehrin Burdur olduğunu öğrenmesi birkaç yıl sürdü. 'Dünya' isimli gezegenin ülkelere ayrılmış olduğunu öğrenip bunu gereksiz bulduğunda daha muntazam Türkçe konuşmakta, elleriyle bazı aletleri kullanabilmekte ve elbette 'litosfer'de iki ayak üzerinde rahatça hareket edebilmekteydi.",
     "Doğum anının, –dakikasına kadar bilinmiyor olsa da– 12:30-12:54 arası olduğu kesine yakındır. (Tam dakika ve mümkünse saniye halen aranmaktadır.)",
@@ -47,5 +51,23 @@
     "Birkaç yıl boyunca Arkın Ilıcalı'nın 'Mercan Dede' isimli projesi kapsamında Türkiye'nin pek çok şehrinde, Antarktika ve Afrika dışındaki kıtaların pek çok ülkesinde (Portekiz, Danimarka, Japonya, Kanada, İspanya, Hollanda, İtalya, İsviçre, Fransa, Almanya, Ürdün, Birleşik Arap Emirlikleri ve Avustralya) kanun çaldı. (Bu Sezer Yılmaz'ın Afrika'ya ayak basmadığı anlamına gelmemektedir; başka bir vesîleyle \"elbette Afrika dahil\" edilmiştir.)",
     "2017'de düzenlemelerini Orçun Çanalı'nın yaptığı, Volkan Öktem (davul), Alp Ersönmez (bas), Serhan Yasdıman (gitar), Yurdal Tokcan (ud), Şakir Ozan Uygan (perküsyon) ve nev-i şahsına münhasır şan üstadı Haktan'ın eşliğiyle kaydedilmiş olan 'Detay' isimli albümü yayınladı. Aynı yıl itibarı ile New York City'de yarı zamanlı olarak yaşamaya başladı. 2019 itibarı ile de California'ya taşındı. Boeing pilotu olan kardeşi Ozan'ı, atmosfer dışına çıkabileceği bir araca terfi ettirebilmek umuduyla NASA'ya başvurmaya yönlendirmeye çalışmış fakat şu ana kadar başarılı olamamıştır. Bu yüzden ömrünü Samanyolu'nun Orion Kolu'ndan dışarı çıkamadan geçirecek olması 'neredeyse kesin'dir (zira henüz stratosfere vasıl olduğu vaki değildir). Buna rağmen aksi bir durum gerçekleşir de daha uzaklara gidecek olursa <a href=\"https://x.com/sezeryilmaz\" target=\"_blank\">x.com/sezeryilmaz</a> adresinden muhakkak insanlığa bildireceğinin sözünü –işte burada– yazılı olarak vermiştir. Deniz seviyesinden en fazla birkaç bin metre uzaklaşabileceği saniyeler (belki de yıllar) boyunca –büyük bir sıhhi müşkül yaşamazsa– ikinci YouTube kanalı olan <a href=\"https://www.youtube.com/@amatorflanor\" target=\"_blank\">Amatör Flanör</a>'de tek başına veya bir başkasıyla bazı konular üzerine konuşmaya devam ederek, bu metinde değişiklikler yaparak ve arada bir \"Yoksa çok mu uzattım?\" diye düşünerek misafirliğini nihayetlendirmeyi tasavvur etmektedir.",
     "Bu metnin \"tamamlandığı\" tarih itibarı ile bir makberi olmadığı gibi henüz kalbinin durmasına sebep olacak hadise dahi gayrimuayyen olduğu için nekrolojisi yazılmayı beklemektedir. Muhtemelen o vakte kadar müziğin yanı sıra felsefeye, edebiyata, bilime ve lezzetli yemeklere ilgi duymayı sürdürecektir."
-  ]
+  ],
+  "chkDj": "Kanun & DJ Set",
+  "lblEventAddress": "Etkinlik Adresi",
+  "subtitleBio": "Enstrümanist · YouTuber · Vodcaster",
+  "titleBio": "BİYOGRAFİ",
+  "titleVideos": "VİDEOLAR",
+  "lblMessage": "Etkinliğinizle ilgili yaklaşık süre, konuk sayısı ve diğer ilgili bilgileri buraya ekleyebilirsiniz.",
+  "lblEventDate": "Etkinlik Tarihi",
+  "lblPreferredSetup": "Tercih Edilen Kurulum",
+  "successDesc": "Başvurunuz başarıyla alındı.",
+  "btnSubmit": "Gönder",
+  "successTitle": "Teşekkürler",
+  "navBooking": "Rezervasyon",
+  "lblLastName": "Soyad",
+  "lblPhone": "Telefon",
+  "lblStartTime": "Başlangıç Saati",
+  "lblOtherPlaceholder": "Lütfen belirtin...",
+  "navVideos": "VİDEOLAR",
+  "headerImgLeft": "/images/sy003.png"
 }
