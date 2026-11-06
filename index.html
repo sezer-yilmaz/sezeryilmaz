@@ -1,5 +1,3 @@
-import json
-
 html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -682,7 +680,7 @@ html_content = """<!DOCTYPE html>
 
   <script>
     // ── TRANSLATIONS LOADER ──────────────────────────────────────
-    let translations = {};
+    let translations = { en: {}, tr: {} };
 
     async function loadTranslations() {
       try {
@@ -693,8 +691,45 @@ html_content = """<!DOCTYPE html>
         translations.en = await enRes.json();
         translations.tr = await trRes.json();
       } catch (err) {
-        console.error("Metin yükleme hatası:", err);
+        console.error("JSON metinleri tam yuklenemedi. Biyografiler JS uzerinden aktariliyor.", err);
+        if (!translations.en) translations.en = {};
+        if (!translations.tr) translations.tr = {};
       }
+      
+      translations.tr.bio = [
+        "Aristoteles'in doğumundan yaklaşık 2369 yıl, doğup doğmadığı konusunda şek olan İsa'dan ise bundan daha az bir yıl sonra, yani Umberto Eco'nun Gülün Adı isimli romanının film çekimleri sürerken, devlet henüz kendisine varlığını hissettirmemişken, kime veya neye ait olduğunu bilmediği, 'hastane' denen bir binanın birinci katındaki güney cepheli bir odada dünyaya geldiği tanıklar tarafından onaylı olan Sezer Yılmaz'ın, bu hastanenin bulunduğu şehrin ismini öğrenmesi birkaç yıl sürdü. 'Dünya' isimli gezegenin ülkelere ayrılmış olduğunu öğrenip bunun gerekli mi gereksiz mi olduğuna karar veremediği sıralarda daha muntazam Türkçe konuşmakta, elleriyle bazı aletleri kullanabilmekte ve 'pedosferde iki ayak üzerinde rahatça hareket edebilmekteydi.",
+        "Doğduğu gün Guetemala’da seksen sekiz kişinin öldüğü bir uçak kazası olmasının onun doğumundan bağımsız bir talihsizlik olarak değerlendirilmesi, ertesi gün Abant Gölü ve Aras Nehri'nin donmasının da Türkiye’de Ocak ayının sert mizacıyla alakalı bulunması sayesinde kendisi meşum bir çocuk ilan edilmedi.",
+        "Anne ve babasının iş hayatından mütevellit hayatının ilk üç yılında en sık gördüğü iki insan anneannesi ve dedesi oldu. Sonraki üç yılının büyük kısmını da okul öncesi eğitimle geçirdikten sonra okul hayatı başlatıldı.",
+        "On yaşında bağlamayla müziğe başladı. (Bu sahih bir rivayet olarak gösterilse de, daha öncesinde ıslıkla, dönemin popüler eserlerini yorumlama girişimleri oldu. Ayrıca şu an kim olduğunu hatırlamadığı bir amcanın kendisine mızıka hediye ettiğini ve mızıka kariyerinin çok kısa sürdüğünü dahi anımsamaktadır.)",
+        "Hayatına müzik girince futbol ile müzik arasındaki seçiminin kesinleşme süreci başladı. Dünyadaki on ikinci yılı dolmadan kararını verdi ve biletlerin, maçın yapıldığı 'beton sahadaki eksikliklerin giderilmesi' için satıldığı maçla jübilesini yaptı.",
+        "'Birinci sınıf'tan sonra, gittikçe kalitenin düşmesinden midir bilinmez, dördüncü sınıfın sonundan itibaren ders çalışmaya ayırdığı süre azalınca notlarında kısmi bir inhitat görüldü. Lakin izan yeteneğinde sarih bir gerileme görülmediği için kitap okumaya ve müzik dinlemeye ayırdığı süreyi artırdı.",
+        "İlk ve orta okul yılları boyunca pek çok okul içi ve okul dışı etkinlikte önceleri bağlamayla, daha sonra udla yer aldı. Sonra Antalya Anadolu Güzel Sanatlar Lisesi'ni kazandı ve yaklaşık sekiz ay İngilizce hazırlık eğitimi aldığı ileri sürülmesine rağmen kortikal örüntülerin incelenmesi bu iddiayı doğrulayacak anlamlı bir bulgu ortaya koyamadı. Buna mukabil, kanun icrasıyla ilişkili müzikal işlemleme ağlarının temsili ve yoğunluğu bunu görebilen gözlere çarptı. Hazırlık sınıfı onu bu okula hazırlayamadı ama Antalya’da yalnız geçirdiği aylar on beş yaşından itibaren yaşayacağı İstanbul’a hazırlamıştı.",
+        "İstanbul Teknik Üniversitesi Türk Müziği Devlet Konservatuarı Lise Birimi'nin (yine şu “devlet”) giriş sınavlarında muvaffak olduğu ilan edilince Antalya’dan İstanbul’a taşındı… Orada Türk Müziği'ne büyük katkıları olan kanun üstadı ve bestekar Göksel Baktagir'le tanıştı. Maahaza, İ.T.Ü'de Prof. Erol Deran'dan kanun, Erol Sayan'dan repertuar dersi aldı. On altı yaşını yeni doldurduğu günlerde kemanî arkadaşı Haluk Yılmaz ile enstrümantal bir konser verdi. Altı ay sonra ikincisini bu sefer konuk sanatkar arkadaşlarıyla ve Göksel Baktagir’in de katılımıyla gerçekleştirdi. Talebeliği sırasında konservatuarda düzenlenen pek çok faaliyette de yer aldı. 'İstanbul Sazendeleri' isimli grubun bazı konserlerinde 'mihman sazende' olarak sahnede bulundu ve bu konserlerin birinde Göksel Baktagir’le birlikte onun Atlantis isimli eserini birlkte icra etti.",
+        "Birkaç yıl boyunca Arkın Ilıcalı'nın 'Mercan Dede' isimli projesi kapsamında Türkiye'nin pek çok şehrinde, Antarktika ve Afrika dışındaki kıtaların pek çok ülkesinde (Portekiz, Danimarka, Japonya, Kanada, İspanya, Hollanda, İtalya, İsviçre, Fransa, Almanya, Ürdün, Birleşik Arap Emirlikleri ve Avustralya) kanun çaldı. (Bu Sezer Yılmaz'ın Afrika'ya ayak basmadığı anlamına gelmemektedir; başka bir vesîleyle \"elbette Afrika dahil\" edilmiştir.)",
+        "Usta müzisyenler Orçun Çanaklı (düzenleme, mix ve klavye), Volkan Öktem (davul), Alp Ersönmez (bas), Serhan Yasdıman (gitar), Yurdal Tokcan (ud), Şakir Ozan Uygan (perküsyon) ve nev-i şahsına münhasır yorumcu Haktan'ın eşliğiyle kaydedilmiş olan 'Detay' isimli albümü yayınladı ve o sıralar New York City'de yarı zamanlı olarak yaşamaya başladı. Bir süre sonra California'ya taşındı.",
+        "California’da müziğin yanı sıra, tek başına veya bir başkasıyla bazı konular üzerine konuştuğu ikinci YouTube kanalı olan Amatör Flanör için videolar üretmeye başladı.",
+        "Ömrünü Samanyolu'nun Orion Kolu'ndan dışarı çıkamadan geçirecek olması neredeyse kesindir (zira henüz stratosfere vasıl olduğu vaki değildir). Daha uzaklara gitme imkanı olursa x.com/sezeryilmaz adresinden muhakkak insanlığa bildireceğinin sözünü –işte burada– yazılı olarak vermiştir.",
+        "Deniz seviyesinden en fazla birkaç bin metre uzaklaşabileceği saniyeler (belki de yıllar) boyunca –büyük bir sıhhi müşkül yaşamazsa– müzik ve sohbet videoları yayınlamanın yanı sıra, felsefeye, edebiyata, bilime ve lezzetli yemeklere ilgi duymayı sürdürerek, bu metinde değişiklikler yaparak ve arada bir \"Yoksa çok mu uzattım?\" diye düşünerek misafirliğini nihayetlendirmeyi tasavvur etmektedir.",
+        "Bu metnin \"tamamlandığı\" tarih itibarı ile bir makberi olmadığı gibi henüz kalbinin durmasına sebep olacak hadise dahi gayrimuayyen olduğu için epikriz yahut otopsi raporu yazılmayı beklemektedir."
+      ];
+
+      translations.en.bio = [
+        "Approximately 2,369 years after the birth of Aristotle, and somewhat fewer years after Jesus, whose actual birth hangs in equipoise, that is, in the days when cameras were still rolling on the set of the film adaptation of Umberto Eco’s novel The Name of the Rose, Sezer Yılmaz came into the world in a south-facing room on the first floor of a building called a ‘hospital’, the ownership of which he did not yet know, at a time when the state had not yet made its existence felt to him.",
+        "It took him a couple of years to learn the name of the city in which this hospital stood. Around the time he discovered that the planet called ‘Earth’ had been divided into countries, and found himself unable to decide whether this arrangement was necessary or unnecessary, he was already speaking Turkish properly, using certain tools with his hands, and moving quite comfortably on two feet across the pedosphere.",
+        "An aircraft accident in which eighty-eight people died in Guatemala on the day of his birth was regarded as a misfortune independent of his arrival, and the freezing of Lake Abant and the Aras River the following day was attributed to the harsh temperament of January in Türkiye; thanks to these interpretations, he was not declared an ill-omened child.",
+        "Owing to his parents’ working lives, the two people he saw most frequently in the first three years of his life were his maternal grandmother and grandfather. After he had spent the greater part of the following three years in nursery education, his school life was set in motion.",
+        "At the age of ten, he got his start in music playing the bağlama. (Though this is presented as a reliable account, there had earlier been attempts to interpret the popular works of the period by whistling. He also recalls that an uncle whose identity he no longer remembers once gave him a harmonica, and that his harmonica career was very brief.)",
+        "Once music entered his life, the process of finalising his choice between football and music began. Before completing his twelfth year upon the earth he made his decision, and he played his testimonial match in a game whose tickets were sold for ‘the remedying of deficiencies on the concrete pitch’.",
+        "After the first grade – whether from a gradual decline in quality or for some other reason remains unknown – the time he devoted to studying diminished from the end of the fourth grade onward, and a partial deterioration was observed in his grades. Yet since no manifest retrograde was seen in his faculty of discernment, he increased the time he allotted to reading books and listening to music.",
+        "Throughout his primary and secondary school years he took part in numerous school and extra-curricular events, first with the bağlama and later with the oud. He then won a place at Antalya Anatolian Fine Arts High School, and although it is asserted that he received approximately eight months of English preparatory instruction, an examination of cortical patterns has yielded no meaningful finding to confirm this claim. In contrast, the representation and density of the musical processing networks associated with qanun performance were striking to eyes capable of perceiving them. The preparatory class did not prepare him for that school, yet the months he spent alone in Antalya prepared him for the life he would lead in Istanbul from the age of fifteen.",
+        "When it was announced that he had succeeded in the entrance examinations for the High School Unit of the Istanbul Technical University Turkish Music State Conservatory (that ‘state’ again), he moved from Antalya to Istanbul… There he met Göksel Baktagir, a qanun master and composer who had made great contributions to Turkish music. Meanwhile, at ITU he received qanun instruction from Prof Erol Deran and repertoire lessons from Erol Sayan. In the days when he had only just completed his sixteenth year, he gave an instrumental concert with his violinist friend Haluk Yılmaz. Six months later he gave a second, this time with guest artists and the participation of Göksel Baktagir himself. During his time as a student he also took part in numerous activities organised at the conservatory. He appeared on stage as a ‘guest instrumentalist’ in certain concerts of the ensemble called ‘İstanbul Sazendeleri’, and in one of those concerts he performed Baktagir’s piece titled Atlantis alongside the master himself.",
+        "For several years, as part of Arkın Ilıcalı’s project called ‘Mercan Dede’, he played the qanun in many cities of Türkiye and in numerous countries across continents other than Antarctica and Africa (Portugal, Denmark, Japan, Canada, Spain, the Netherlands, Italy, Switzerland, France, Germany, Jordan, the United Arab Emirates, and Australia). (This does not mean that Sezer Yılmaz has never set foot in Africa; on another occasion it was, of course, included.)",
+        "He released the album titled ‘Detay’, recorded with the accompaniment of master musicians Orçun Çanaklı (arrangement, mixing, and keyboards), Volkan Öktem (drums), Alp Ersönmez (bass), Serhan Yasdıman (gitar), Yurdal Tokcan (ud), Şakir Ozan Uygan (percussion), and the singular interpreter Haktan, and around that time he began living part-time in New York City. Some time later he moved to California.",
+        "In California, alongside music, he began producing videos for his second YouTube channel, Amatör Flanör, in which he speaks on certain subjects either alone or with another.",
+        "It is almost certain that he will spend his life without exiting the Orion Arm of the Milky Way (for it has not yet come to pass that he has even reached the stratosphere). Should the opportunity arise to go farther, he has given his word – right here in writing – that he will most certainly inform humanity via the address x.com/sezeryilmaz.",
+        "For the seconds (or perhaps years) during which he can distance himself at most a few thousand metres above sea level – provided he does not encounter a major health difficulty – he envisions bringing his sojourn to a close by continuing to publish music and conversation videos, by maintaining an interest in philosophy, literature, science, and delectable food, by making alterations to this text, and by occasionally thinking, ‘Or have I gone on too long?’",
+        "As of the date this text was ‘completed’, he has no grave, and since the event that will cause his heart to stop remains as yet undetermined, an epicrisis or autopsy report awaits being written."
+      ];
     }
 
     // ── CUSTOM TIME PICKERS ───────────────────────────────────────
@@ -916,38 +951,36 @@ html_content = """<!DOCTYPE html>
         imgRight.style.display = 'none';
       }
 
-      document.getElementById('nav-booking').textContent    = t.navBooking;
-      document.getElementById('nav-videos').textContent     = t.navVideos;
-      document.getElementById('nav-bio').textContent        = t.navBio;
-      document.getElementById('title-booking').textContent  = t.titleBooking;
-      document.getElementById('desc-booking').textContent   = t.descBooking;
-      setPlaceholder('first-name', t.lblFirstName);
-      setPlaceholder('last-name', t.lblLastName);
-      setPlaceholder('email', t.lblEmail);
-      setPlaceholder('phone', t.lblPhone);
-      document.getElementById('lbl-event-date').textContent = t.lblEventDate;
+      document.getElementById('nav-booking').textContent    = t.navBooking || "Booking";
+      document.getElementById('nav-videos').textContent     = t.navVideos || "Videos";
+      document.getElementById('nav-bio').textContent        = t.navBio || "Biography";
+      document.getElementById('title-booking').textContent  = t.titleBooking || "Booking";
+      document.getElementById('desc-booking').textContent   = t.descBooking || "Please complete this short form to book your experience.";
+      setPlaceholder('first-name', t.lblFirstName || "First Name");
+      setPlaceholder('last-name', t.lblLastName || "Last Name");
+      setPlaceholder('email', t.lblEmail || "Email");
+      setPlaceholder('phone', t.lblPhone || "Phone");
+      document.getElementById('lbl-event-date').textContent = t.lblEventDate || "Event Date";
       
-      setPlaceholder('event-time-en', t.lblStartTime);
-      setPlaceholder('event-time-tr', t.lblStartTime);
+      setPlaceholder('event-time-en', t.lblStartTime || "Start Time");
+      setPlaceholder('event-time-tr', t.lblStartTime || "Başlangıç Saati");
       
-      setPlaceholder('event-address', t.lblEventAddress);
-      document.getElementById('lbl-preferred-setup').textContent = t.lblPreferredSetup;
-      document.getElementById('message').placeholder = t.lblMessage;
-      document.getElementById('other-event-type').placeholder = t.lblOtherPlaceholder;
-      document.getElementById('btn-submit').textContent     = t.btnSubmit;
-      document.getElementById('txt-success-title').textContent = t.successTitle;
-      document.getElementById('txt-success-desc').textContent  = t.successDesc;
-      document.getElementById('title-videos').textContent   = t.titleVideos;
-      document.getElementById('title-bio').textContent      = t.titleBio;
-      document.getElementById('subtitle-bio').textContent   = t.subtitleBio;
-      document.getElementById('chk-solo-label').textContent = t.chkSolo;
-      document.getElementById('chk-dj-label').textContent   = t.chkDj;
+      document.getElementById('lbl-preferred-setup').textContent = t.lblPreferredSetup || "Preferred Setup";
+      document.getElementById('message').placeholder = t.lblMessage || "Message";
+      document.getElementById('other-event-type').placeholder = t.lblOtherPlaceholder || "Please specify...";
+      document.getElementById('btn-submit').textContent     = t.btnSubmit || "Submit";
+      document.getElementById('txt-success-title').textContent = t.successTitle || "Thank You";
+      document.getElementById('txt-success-desc').textContent  = t.successDesc || "Your submission has been received.";
+      document.getElementById('title-videos').textContent   = t.titleVideos || "Videos";
+      document.getElementById('title-bio').textContent      = t.titleBio || "Biography";
+      document.getElementById('subtitle-bio').textContent   = t.subtitleBio || "instrumentalist · qanun player";
+      document.getElementById('chk-solo-label').textContent = t.chkSolo || "Solo Qanun";
+      document.getElementById('chk-dj-label').textContent   = t.chkDj || "Qanun & DJ Set";
 
       const sel = document.getElementById('event-type');
       const prevVal = sel.value;
       sel.innerHTML = '';
       
-      // SABİT SİLİK İPUCU METNİNİ EKLEME (JSON'dan bağımsız)
       const placeholderOpt = document.createElement('option');
       placeholderOpt.value = "";
       placeholderOpt.textContent = lang === 'tr' ? "Etkinlik Türü *" : "Event Type *";
@@ -964,7 +997,6 @@ html_content = """<!DOCTYPE html>
         });
       }
 
-      // Daha önce seçilmiş geçerli bir değer varsa onu geri getir, yoksa Placeholder'ı seç
       let valExists = false;
       for (let i = 1; i < sel.options.length; i++) {
         if (sel.options[i].value === prevVal && prevVal !== "") {
@@ -979,7 +1011,6 @@ html_content = """<!DOCTYPE html>
         sel.value = ""; 
       }
 
-      // Renk güncellemesi için change olayını tetikle
       sel.dispatchEvent(new Event('change'));
 
       const bioContainer = document.getElementById('bio-content');
@@ -1049,9 +1080,8 @@ html_content = """<!DOCTYPE html>
       currentPeriod = 'PM';
     });
 
-    // Event type logic: 'Other' field, Placeholder Color & Secondary Setup options
+    // Event type logic
     document.getElementById('event-type').addEventListener('change', function() {
-      // Placeholder için %55 opacity rengini ayarlama
       if (this.value === "" || this.value === null) {
         this.style.color = "rgba(107, 101, 96, 0.55)";
       } else {
@@ -1169,52 +1199,10 @@ html_content = """<!DOCTYPE html>
   </script>
 
 </body>
-</html>"""
+</html>
+"""
 
-bio_tr = [
-    "Aristoteles'in doğumundan yaklaşık 2369 yıl, doğup doğmadığı konusunda şek olan İsa'dan ise bundan daha az bir yıl sonra, yani Umberto Eco'nun Gülün Adı isimli romanının film çekimleri sürerken, devlet henüz kendisine varlığını hissettirmemişken, kime veya neye ait olduğunu bilmediği, 'hastane' denen bir binanın birinci katındaki güney cepheli bir odada dünyaya geldiği tanıklar tarafından onaylı olan Sezer Yılmaz'ın, bu hastanenin bulunduğu şehrin ismini öğrenmesi birkaç yıl sürdü. 'Dünya' isimli gezegenin ülkelere ayrılmış olduğunu öğrenip bunun gerekli mi gereksiz mi olduğuna karar veremediği sıralarda daha muntazam Türkçe konuşmakta, elleriyle bazı aletleri kullanabilmekte ve 'pedosferde iki ayak üzerinde rahatça hareket edebilmekteydi.",
-    "Doğduğu gün Guetamala’da seksen sekiz kişinin öldüğü bir uçak kazası olmasının onun doğumundan bağımsız bir talihsizlik olarak değerlendirilmesi, ertesi gün Abant Gölü ve Aras Nehri'nin donmasının da Türkiye’de Ocak ayının sert mizacıyla alakalı bulunması sayesinde kendisi meşum bir çocuk ilan edilmedi.",
-    "Anne ve babasının iş hayatından mütevellit hayatının ilk üç yılında en sık gördüğü iki insan anneannesi ve dedesi oldu. Sonraki üç yılının büyük kısmını da okul öncesi eğitimle geçirdikten sonra okul hayatı başlatıldı.",
-    "On yaşında bağlamayla müziğe başladı. (Bu sahih bir rivayet olarak gösterilse de, daha öncesinde ıslıkla, dönemin popüler eserlerini yorumlama girişimleri oldu. Ayrıca şu an kim olduğunu hatırlamadığı bir amcanın kendisine mızıka hediye ettiğini ve mızıka kariyerinin çok kısa sürdüğünü dahi anımsamaktadır.)",
-    "Hayatına müzik girince futbol ile müzik arasındaki seçiminin kesinleşme süreci başladı. Dünyadaki on ikinci yılı dolmadan kararını verdi ve biletlerin, maçın yapıldığı 'beton sahadaki eksikliklerin giderilmesi' için satıldığı maçla jübilesini yaptı.",
-    "'Birinci sınıf'tan sonra, gittikçe kalitenin düşmesinden midir bilinmez, dördüncü sınıfın sonundan itibaren ders çalışmaya ayırdığı süre azalınca notlarında kısmi bir inhitat görüldü. Lakin izan yeteneğinde sarih bir gerileme görülmediği için kitap okumaya ve müzik dinlemeye ayırdığı süreyi artırdı.",
-    "İlk ve orta okul yılları boyunca pek çok okul içi ve okul dışı etkinlikte önceleri bağlamayla, daha sonra udla yer aldı. Sonra Antalya Anadolu Güzel Sanatlar Lisesi'ni kazandı ve yaklaşık sekiz ay İngilizce hazırlık eğitimi aldığı ileri sürülmesine rağmen kortikal örüntülerin incelenmesi bu iddiayı doğrulayacak anlamlı bir bulgu ortaya koyamadı. Buna mukabil, kanun icrasıyla ilişkili müzikal işlemleme ağlarının temsili ve yoğunluğu bunu görebilen gözlere çarptı. Hazırlık sınıfı onu bu okula hazırlayamadı ama Antalya’da yalnız geçirdiği aylar on beş yaşından itibaren yaşayacağı İstanbul’a hazırlamıştı.",
-    "İstanbul Teknik Üniversitesi Türk Müziği Devlet Konservatuarı Lise Birimi'nin (yine şu “devlet”) giriş sınavlarında muvaffak olduğu ilan edilince Antalya’dan İstanbul’a taşındı… Orada Türk Müziği'ne büyük katkıları olan kanun üstadı ve bestekar Göksel Baktagir'le tanıştı. Maahaza, İ.T.Ü'de Prof. Erol Deran'dan kanun, Erol Sayan'dan repertuar dersi aldı. On altı yaşını yeni doldurduğu günlerde kemanî arkadaşı Haluk Yılmaz ile enstrümantal bir konser verdi. Altı ay sonra ikincisini bu sefer konuk sanatkar arkadaşlarıyla ve Göksel Baktagir’in de katılımıyla gerçekleştirdi. Talebeliği sırasında konservatuarda düzenlenen pek çok faaliyette de yer aldı. 'İstanbul Sazendeleri' isimli grubun bazı konserlerinde 'mihman sazende' olarak sahnede bulundu ve bu konserlerin birinde Göksel Baktagir’le birlikte onun Atlantis isimli eserini birlkte icra etti.",
-    "Birkaç yıl boyunca Arkın Ilıcalı'nın 'Mercan Dede' isimli projesi kapsamında Türkiye'nin pek çok şehrinde, Antarktika ve Afrika dışındaki kıtaların pek çok ülkesinde (Portekiz, Danimarka, Japonya, Kanada, İspanya, Hollanda, İtalya, İsviçre, Fransa, Almanya, Ürdün, Birleşik Arap Emirlikleri ve Avustralya) kanun çaldı. (Bu Sezer Yılmaz'ın Afrika'ya ayak basmadığı anlamına gelmemektedir; başka bir vesîleyle \"elbette Afrika dahil\" edilmiştir.)",
-    "Usta müzisyenler Orçun Çanaklı (düzenleme, mix ve klavye), Volkan Öktem (davul), Alp Ersönmez (bas), Serhan Yasdıman (gitar), Yurdal Tokcan (ud), Şakir Ozan Uygan (perküsyon) ve nev-i şahsına münhasır yorumcu Haktan'ın eşliğiyle kaydedilmiş olan 'Detay' isimli albümü yayınladı ve o sıralar New York City'de yarı zamanlı olarak yaşamaya başladı. Bir süre sonra California'ya taşındı.",
-    "California’da müziğin yanı sıra, tek başına veya bir başkasıyla bazı konular üzerine konuştuğu ikinci YouTube kanalı olan Amatör Flanör için videolar üretmeye başladı.",
-    "Ömrünü Samanyolu'nun Orion Kolu'ndan dışarı çıkamadan geçirecek olması neredeyse kesindir (zira henüz stratosfere vasıl olduğu vaki değildir). Daha uzaklara gitme imkanı olursa x.com/sezeryilmaz adresinden muhakkak insanlığa bildireceğinin sözünü –işte burada– yazılı olarak vermiştir.",
-    "Deniz seviyesinden en fazla birkaç bin metre uzaklaşabileceği saniyeler (belki de yıllar) boyunca –büyük bir sıhhi müşkül yaşamazsa– müzik ve sohbet videoları yayınlamanın yanı sıra, felsefeye, edebiyata, bilime ve lezzetli yemeklere ilgi duymayı sürdürerek, bu metinde değişiklikler yaparak ve arada bir \"Yoksa çok mu uzattım?\" diye düşünerek misafirliğini nihayetlendirmeyi tasavvur etmektedir.",
-    "Bu metnin \"tamamlandığı\" tarih itibarı ile bir makberi olmadığı gibi henüz kalbinin durmasına sebep olacak hadise dahi gayrimuayyen olduğu için epikriz yahut otopsi raporu yazılmayı beklemektedir."
-]
-
-bio_en = [
-    "Approximately 2,369 years after the birth of Aristotle, and somewhat fewer years after Jesus, whose actual birth hangs in equipoise, that is, in the days when cameras were still rolling on the set of the film adaptation of Umberto Eco’s novel The Name of the Rose, Sezer Yılmaz came into the world in a south-facing room on the first floor of a building called a ‘hospital’, the ownership of which he did not yet know, at a time when the state had not yet made its existence felt to him.",
-    "It took him a couple of years to learn the name of the city in which this hospital stood. Around the time he discovered that the planet called ‘Earth’ had been divided into countries, and found himself unable to decide whether this arrangement was necessary or unnecessary, he was already speaking Turkish properly, using certain tools with his hands, and moving quite comfortably on two feet across the pedosphere.",
-    "An aircraft accident in which eighty-eight people died in Guatemala on the day of his birth was regarded as a misfortune independent of his arrival, and the freezing of Lake Abant and the Aras River the following day was attributed to the harsh temperament of January in Türkiye; thanks to these interpretations, he was not declared an ill-omened child.",
-    "Owing to his parents’ working lives, the two people he saw most frequently in the first three years of his life were his maternal grandmother and grandfather. After he had spent the greater part of the following three years in nursery education, his school life was set in motion.",
-    "At the age of ten, he got his start in music playing the bağlama. (Though this is presented as a reliable account, there had earlier been attempts to interpret the popular works of the period by whistling. He also recalls that an uncle whose identity he no longer remembers once gave him a harmonica, and that his harmonica career was very brief.)",
-    "Once music entered his life, the process of finalising his choice between football and music began. Before completing his twelfth year upon the earth he made his decision, and he played his testimonial match in a game whose tickets were sold for ‘the remedying of deficiencies on the concrete pitch’.",
-    "After the first grade – whether from a gradual decline in quality or for some other reason remains unknown – the time he devoted to studying diminished from the end of the fourth grade onward, and a partial deterioration was observed in his grades. Yet since no manifest retrograde was seen in his faculty of discernment, he increased the time he allotted to reading books and listening to music.",
-    "Throughout his primary and secondary school years he took part in numerous school and extra-curricular events, first with the bağlama and later with the oud. He then won a place at Antalya Anatolian Fine Arts High School, and although it is asserted that he received approximately eight months of English preparatory instruction, an examination of cortical patterns has yielded no meaningful finding to confirm this claim. In contrast, the representation and density of the musical processing networks associated with qanun performance were striking to eyes capable of perceiving them. The preparatory class did not prepare him for that school, yet the months he spent alone in Antalya prepared him for the life he would lead in Istanbul from the age of fifteen.",
-    "When it was announced that he had succeeded in the entrance examinations for the High School Unit of the Istanbul Technical University Turkish Music State Conservatory (that ‘state’ again), he moved from Antalya to Istanbul… There he met Göksel Baktagir, a qanun master and composer who had made great contributions to Turkish music. Meanwhile, at ITU he received qanun instruction from Prof Erol Deran and repertoire lessons from Erol Sayan. In the days when he had only just completed his sixteenth year, he gave an instrumental concert with his violinist friend Haluk Yılmaz. Six months later he gave a second, this time with guest artists and the participation of Göksel Baktagir himself. During his time as a student he also took part in numerous activities organised at the conservatory. He appeared on stage as a ‘guest instrumentalist’ in certain concerts of the ensemble called ‘İstanbul Sazendeleri’, and in one of those concerts he performed Baktagir’s piece titled Atlantis alongside the master himself.",
-    "For several years, as part of Arkın Ilıcalı’s project called ‘Mercan Dede’, he played the qanun in many cities of Türkiye and in numerous countries across continents other than Antarctica and Africa (Portugal, Denmark, Japan, Canada, Spain, the Netherlands, Italy, Switzerland, France, Germany, Jordan, the United Arab Emirates, and Australia). (This does not mean that Sezer Yılmaz has never set foot in Africa; on another occasion it was, of course, included.)",
-    "He released the album titled ‘Detay’, recorded with the accompaniment of master musicians Orçun Çanaklı (arrangement, mixing, and keyboards), Volkan Öktem (drums), Alp Ersönmez (bass), Serhan Yasdıman (gitar), Yurdal Tokcan (ud), Şakir Ozan Uygan (percussion), and the singular interpreter Haktan, and around that time he began living part-time in New York City. Some time later he moved to California.",
-    "In California, alongside music, he began producing videos for his second YouTube channel, Amatör Flanör, in which he speaks on certain subjects either alone or with another.",
-    "It is almost certain that he will spend his life without exiting the Orion Arm of the Milky Way (for it has not yet come to pass that he has even reached the stratosphere). Should the opportunity arise to go farther, he has given his word – right here in writing – that he will most certainly inform humanity via the address x.com/sezeryilmaz.",
-    "For the seconds (or perhaps years) during which he can distance himself at most a few thousand metres above sea level – provided he does not encounter a major health difficulty – he envisions bringing his sojourn to a close by continuing to publish music and conversation videos, by maintaining an interest in philosophy, literature, science, and delectable food, by making alterations to this text, and by occasionally thinking, ‘Or have I gone on too long?’",
-    "As of the date this text was ‘completed’, he has no grave, and since the event that will cause his heart to stop remains as yet undetermined, an epicrisis or autopsy report awaits being written."
-]
-
-tr_bio_js = json.dumps(bio_tr, ensure_ascii=False)
-en_bio_js = json.dumps(bio_en, ensure_ascii=False)
-
-target = "translations.tr = await trRes.json();"
-injection = f"translations.tr = await trRes.json();\n        translations.tr.bio = {tr_bio_js};\n        translations.en.bio = {en_bio_js};"
-
-new_html = html_content.replace(target, injection)
-
-with open("gemini-code-updated-bio.html", "w", encoding="utf-8") as f:
-    f.write(new_html)
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
 
 print("File generated")
